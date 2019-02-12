@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
+	<head th:replace="fragments/head :: head"></head>
+	<body>
+		<!-- Navigation -->
+		<nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/nav :: nav"></nav>
+
+		<div class="container">
+		<header th:replace="fragments/logo :: logo"></header>
+		<section class="main-slider">
+			<ul class="bxslider">
+				<li><div class="slider-item"><img src="/images/1140x500-2.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
+				<li><div class="slider-item"><img src="/images/1140x500-1.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
+				<li><div class="slider-item"><img src="/images/1140x500-3.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
+			</ul>
+		</section>
+		<section>
+			<div class="row">
+				<div class="col-md-8">
+					<article class="blog-post" th:replace="fragments/article :: article"></article>
+				</div>
+				<div class="col-md-4 sidebar-gutter" th:replace="fragments/sidebar :: aside"></div>
+			</div>
+		</section>
+		</div><!-- /.container -->
+
+		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
+
+		<th:block th:replace="fragments/script :: js"></th:block>
+	</body>
+</html>
