@@ -7,7 +7,7 @@
 
 		<div class="container">
 		<header th:replace="fragments/logo :: logo"></header>
-		<section class="main-slider">
+		<section class="main-slider" style="display: none">
 			<ul class="bxslider">
 				<li><div class="slider-item"><img src="/images/1140x500-2.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
 				<li><div class="slider-item"><img src="/images/1140x500-1.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
@@ -17,7 +17,7 @@
 		<section>
 			<div class="row">
 				<div class="col-md-8">
-					<article class="blog-post" th:replace="fragments/article :: article"></article>
+					<article class="blog-post" th:replace="fragments/article :: article(${posts})"></article>
 				</div>
 				<div class="col-md-4 sidebar-gutter" th:replace="fragments/sidebar :: aside"></div>
 			</div>
