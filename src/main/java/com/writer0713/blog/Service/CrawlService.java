@@ -18,10 +18,9 @@ public class CrawlService {
 	private static final String URL_FOR_POSTS = "https://blog.naver.com/PostList.nhn?from=postList&blogId=writer0713&categoryNo=0&currentPage=";
 	private static final String URL_FOR_ONE_POST = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=";
 
-	public List<Post> getPostsBy(int pageNo) {
+	public List<Post> getPostsBy(String pageNo) {
 
-		String pageNoStr = String.valueOf(pageNo);
-		String requestURL = URL_FOR_POSTS.concat(pageNoStr);
+		String requestURL = URL_FOR_POSTS.concat(pageNo);
 
 		Document doc = this.getDocument(requestURL);
 		Elements postElements = this.getPosts(doc);
@@ -29,17 +28,35 @@ public class CrawlService {
 		List<Post> posts = postElements.stream().map(element -> {
 			String title = element.select("div.se-title-text span.se-fs-").text();
 			String date = element.select("span.se_publishDate").text();
-			String content = element.select("div.se-main-container").text()
-					.substring(0, 200).concat("...");
+			String content = element.select("div.se-main-container").text();
+			int length = content.length();
+			int ends = (length < 200) ? length : 200;
+			String summary = content.substring(0, ends).concat("...");
 			String url = element.select("a.url").attr("title");
 			String postNo = Stream.of(url.split("/")).reduce((first, last) -> last).get(); // get last element after split
 
-			Post post = new Post(title, date, content, postNo);
+			Post post = new Post(title, date, summary, postNo);
 
 			return post;
 		}).collect(Collectors.toList());
 
 		return posts;
+	}
+
+	public List<String> getPaging(String pageNo) {
+
+		String requestURL = URL_FOR_POSTS.concat(pageNo);
+
+		Document doc = this.getDocument(requestURL);
+		Elements pagingElement = this.getPaging(doc);
+
+		List<String> paging = pagingElement.select("div.blog2_paginate a, strong")
+				.stream()
+				.map(elem -> elem.text().replaceAll("(페이지 이동하기|페이지로 이동)", ""))
+				.filter(elem -> !elem.equals(""))
+				.collect(Collectors.toList());
+
+		return paging;
 	}
 
 	public Post getPostBy(String no) {
@@ -70,5 +87,9 @@ public class CrawlService {
 
 	private Elements getPosts(Document doc) {
 		return doc.select("div#postListBody > div:has(div.post-back)");
+	}
+
+	private Elements getPaging(Document doc) {
+		return doc.select("div.paging");
 	}
 }
