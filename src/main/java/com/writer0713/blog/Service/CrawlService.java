@@ -26,9 +26,9 @@ public class CrawlService {
 		Elements postElements = this.getPosts(doc);
 
 		List<Post> posts = postElements.stream().map(element -> {
-			String title = element.select("div.se-title-text span.se-fs-").text();
+			String title = element.select("div.se-title-text span.se-fs-, div.se_title").text();
 			String date = element.select("span.se_publishDate").text();
-			String content = element.select("div.se-main-container").text();
+			String content = element.select("div.se-main-container, div.__se_component_area").text();
 			int length = content.length();
 			int ends = (length < 200) ? length : 200;
 			String summary = content.substring(0, ends).concat("...");
@@ -66,9 +66,11 @@ public class CrawlService {
 		Document doc = getDocument(requestURL);
 		Element postElement = doc.select("div#post_1").first();
 
-		String title = postElement.select("div.se-title-text").text();
+		System.out.println(doc.html());
+
+		String title = postElement.select("div.se-title-text, div.se_title").text();
 		String date = postElement.select("span.se_publishDate").text();
-		String content = postElement.select("div.se-main-container").html();
+		String content = postElement.select("div.se-main-container, div.__se_component_area").html();
 
 		Post post = new Post(title, date, content);
 
