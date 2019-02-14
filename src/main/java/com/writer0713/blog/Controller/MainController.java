@@ -8,6 +8,7 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 
 import java.util.List;
 
@@ -19,11 +20,13 @@ public class MainController {
 	public CrawlService crawlService;
 
 	@GetMapping("/")
-	public String index(Model model) {
+	public String index(Model model, @RequestParam(value = "page", defaultValue = "1") String page) {
 
-		List<Post> posts = crawlService.getPostsBy(1);
+		List<Post> posts = crawlService.getPostsBy(page);
+		List<String> paging = crawlService.getPaging(page);
 
 		model.addAttribute("posts", posts);
+		model.addAttribute("paging", paging);
 
 		return "index";
 	}
