@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.List;
@@ -27,8 +28,17 @@ public class MainController {
 		return "index";
 	}
 
-	@GetMapping("/post")
-	public String post() {
+	@GetMapping("/post/{no}")
+	public String post(@PathVariable String no, Model model) {
+
+		// TODO 404 페이지로 리다이렉트
+		if (no == null) {
+		}
+
+		Post post = crawlService.getPostBy(no);
+
+		model.addAttribute("post", post);
+
 		return "post";
 	}
 

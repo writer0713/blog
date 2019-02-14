@@ -15,9 +15,9 @@
 							<a href="post.html"><img src="images/750x500-5.jpg" alt=""></a>
 						</div>
 						<div class="blog-post-body">
-							<h2><a href="post.html">Vintage-Inspired Finds for Your Home</a></h2>
-							<div class="post-meta"><span>by <a href="#">Jamie Mooze</a></span>/<span><i class="fa fa-clock-o"></i>March 14, 2015</span>/<span><i class="fa fa-comment-o"></i> <a href="#">343</a></span></div>
-							<div class="blog-post-text">
+							<h2><a href="javascript:void(0)" th:text="${post.title}">Vintage-Inspired Finds for Your Home</a></h2>
+							<div class="post-meta"><span>by <a href="javascript:void(0)" th:text="${post.author}">Jamie Mooze</a></span>/<span th:inline="text"><i class="fa fa-clock-o"></i>[[${post.date}]]</span></div>
+							<div class="blog-post-text" th:utext="${post.content}">
 
 								<p>A newly-developed mathematical method can detect geometric structure in neural activity in the brain. “Previously, in order to understand this structure, scientists needed to relate neural activity to some specific external stimulus,” said Vladimir Itskov, associate professor of mathematics at Penn State University. “Our method is the first to be able to reveal this structure without our knowing an external stimulus ahead of time. We’ve now shown that our new method will allow us to explore the organizational structure of neurons without knowing their function in advance.”</p>
 

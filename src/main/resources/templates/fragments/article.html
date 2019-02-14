@@ -1,7 +1,7 @@
 <article class="blog-post" th:fragment="article (posts)" xmlns:th="http://www.thymeleaf.org">
     <th:block th:each="post : ${posts}">
         <div class="blog-post-image">
-            <a href="/post"><img src="/images/750x500-1.jpg" alt=""></a>
+            <!--<a href="/post" th:href="${post.url}"><img src="/images/750x500-1.jpg" alt=""></a>-->
         </div>
         <div class="blog-post-body" >
             <h2><a href="/post" th:text="${post.title}">Vintage-Inspired Finds for Your Home</a></h2>
@@ -13,7 +13,7 @@
                     thin jacket, did not end up with pneumonia is honestly not even fair.</p>
             </div>
 
-            <div class="read-more"><a href="#">Continue Reading</a></div>
+            <div class="read-more"><a href="#" th:href="${post.url}">Continue Reading</a></div>
         </div>
 
         <hr/>
