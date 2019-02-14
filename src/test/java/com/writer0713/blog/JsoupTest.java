@@ -33,13 +33,31 @@ public class JsoupTest {
 //			System.out.println(content);
 //			System.out.println("============ content end =============");
 
-			String url = element.select("a.url").attr("title");
-			String postNo = Stream.of(url.split("/")).reduce((first, last) -> last).get(); // get last element after split
-			System.out.println(postNo);
+//			String url = element.select("a.url").attr("title");
+//			String postNo = Stream.of(url.split("/")).reduce((first, last) -> last).get(); // get last element after split
+//			System.out.println(postNo);
+
 
 		});
 
 				System.out.println(posts.size());
+	}
+
+	@Test
+	public void pagenation() throws IOException {
+
+		Document document = Jsoup.connect("https://blog.naver.com/PostList.nhn?from=postList&blogId=writer0713&categoryNo=0&currentPage=11").get();
+		Elements element = document.select("div.paging");
+
+		List<String> pagenation = element.select("div.blog2_paginate a, strong")
+				.stream()
+				.map(elem -> elem.text().replaceAll("(페이지 이동하기|페이지로 이동)", ""))
+				.filter(elem -> !elem.equals(""))
+				.collect(Collectors.toList());
+
+		for(String p : pagenation) {
+			System.out.println(p);
+		}
 	}
 
 	@Test
