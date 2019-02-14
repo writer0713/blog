@@ -4,7 +4,7 @@
             <!--<a href="/post" th:href="${post.url}"><img src="/images/750x500-1.jpg" alt=""></a>-->
         </div>
         <div class="blog-post-body" >
-            <h2><a href="/post" th:text="${post.title}">Vintage-Inspired Finds for Your Home</a></h2>
+            <h2><a href="/post" th:href="${post.url}" th:text="${post.title}">Vintage-Inspired Finds for Your Home</a></h2>
             <div class="post-meta"><span>by <a href="javascript:void(0)" th:text="${post.author}">Author</a></span>/<span th:inline="text"><i class="fa fa-clock-o"></i>[[${post.date}]]</span></div>
             <div th:utext="${post.content}">
                 <p>ew months ago, we found ridiculously cheap plane tickets for Boston and off we went. It was our first visit
