@@ -25,7 +25,9 @@ public class MainController {
 		List<Post> posts = crawlService.getPostsBy(page);
 		List<String> paging = crawlService.getPaging(page);
 
+
 		model.addAttribute("posts", posts);
+		model.addAttribute("currentPageNo", page);
 		model.addAttribute("paging", paging);
 
 		return "index";

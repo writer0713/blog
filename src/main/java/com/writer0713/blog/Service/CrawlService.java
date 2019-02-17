@@ -6,6 +6,7 @@ import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.springframework.stereotype.Service;
+import org.springframework.util.StringUtils;
 
 import java.io.IOException;
 import java.util.List;
@@ -52,7 +53,11 @@ public class CrawlService {
 
 		List<String> paging = pagingElement.select("div.blog2_paginate a, strong")
 				.stream()
-				.map(elem -> elem.text().replaceAll("(페이지 이동하기|페이지로 이동)", ""))
+				.map(elem -> {
+					String page = elem.attr("href").replaceAll(".*currentPage=(\\d+)", "$1");
+					if (StringUtils.isEmpty(page)) page = elem.text().replaceAll("(현재 페이지|페이지 이동하기|페이지로 이동)", "");
+					return page;
+				})
 				.filter(elem -> !elem.equals(""))
 				.collect(Collectors.toList());
 
@@ -65,8 +70,6 @@ public class CrawlService {
 
 		Document doc = getDocument(requestURL);
 		Element postElement = doc.select("div#post_1").first();
-
-		System.out.println(doc.html());
 
 		String title = postElement.select("div.se-title-text, div.se_title").text();
 		String date = postElement.select("span.se_publishDate").text();
