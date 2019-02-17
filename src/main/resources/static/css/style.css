@@ -227,6 +227,10 @@ section:last-child {
 		font-size: 12px;
 	}
 
+	.blog-post .read-more {
+		margin: 50px 0 40px;
+	}
+
 	.blog-post .read-more a {
 		display: inline-block;
 		padding: 12px 40px;
