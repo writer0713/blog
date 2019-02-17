@@ -34,7 +34,7 @@ img {
 	height: auto;
 }
 a {
-    color: #4A4A4A;	
+	color: #4A4A4A;
 }
 a:hover, a:focus, a:active, a.active {
 	color: #fec503;
@@ -54,40 +54,33 @@ section:last-child {
 	padding-bottom: 0px;
 }
 /*- Reset bootstrap -*/
-@media (min-width: 1200px) {
+@media (min-width: 1200px)
 	.container {
 		width: 1260px;
 	}
-
 	.row-gutter {
 		margin-left: -20px;
 		margin-right: -20px;
 	}
-
 	.col-gutter {
 		padding-left: 20px;
 		padding-right: 20px;
 	}
-
 	.sidebar-gutter {
 		padding-left: 50px;
 	}
-
 	.navbar .navbar-nav > li > a {
-		color: #fff;
+		color:#fff;
 	}
-
 	header {
 		margin: 130px 0 65px;
 		text-align: center;
 	}
-
 	/*- BX Slaider reset -*/
 	.bxslider {
 		margin: 0;
 		padding: 0;
 	}
-
 	.bx-wrapper .bx-viewport {
 		left: 0;
 		-moz-box-shadow: none;
@@ -95,27 +88,22 @@ section:last-child {
 		box-shadow: none;
 		border: none;
 	}
-
 	.bx-wrapper .bx-prev {
 		border: 1px solid #000;
 		background-image: none !important;
 		background-color: rgba(223, 223, 223, 0.34);
 	}
-
 	.bx-wrapper .bx-next {
 		border: 1px solid #000;
 		background-image: none !important;
 		background-color: rgba(223, 223, 223, 0.34);
 	}
-
 	.bx-wrapper .bx-prev:hover {
 		background-color: rgba(223, 223, 223, 0.34);
 	}
-
 	.bx-wrapper .bx-next:hover {
 		background-color: rgba(223, 223, 223, 0.34);
 	}
-
 	.bx-wrapper .bx-controls-direction a {
 		position: absolute;
 		top: 50%;
@@ -129,11 +117,9 @@ section:last-child {
 		text-align: center;
 		line-height: 50px;
 	}
-
 	.main-slider img {
 		position: relative;
 	}
-
 	.main-slider h2 {
 		position: absolute;
 		bottom: 10px;
@@ -143,38 +129,31 @@ section:last-child {
 		padding: 25px 40px;
 		font-size: 32px;
 	}
-
 	.main-slider h2 a {
 		color: #fff;
 	}
-
 	.main-slider h2 a:hover {
 		color: #dfdfdf;
 	}
-
 	/*- blog post -*/
 	.blog-post {
 		padding-bottom: 30px;
 		margin-bottom: 60px;
 		border-bottom: 1px solid #CECECE;
 	}
-
 	.blog-post:last-child {
 		border-bottom: none;
 	}
-
 	.blog-post .blog-post-body {
 		text-align: center;
 		padding: 20px 0;
 	}
-
 	.blog-post .blog-post-body h2 {
 		margin: 0;
 		padding: 15px 0px 20px;
 		font-size: 41px;
 		line-height: 49px;
 	}
-
 	.blog-post .blog-post-body p {
 		text-align: justify;
 		font-size: 20px;
@@ -182,7 +161,6 @@ section:last-child {
 		line-height: 30px;
 		color: #000;
 	}
-
 	.blog-post .blog-post-body a {
 		color: #4A4A4A;
 		-webkit-transition: all 0.2s ease-out;
@@ -190,47 +168,38 @@ section:last-child {
 		-o-transition: all 0.2s ease-out;
 		transition: all 0.2s ease-out;
 	}
-
-	.blog-post .blog-post-body a:hover {
+	.blog-post .blog-post-body a:hover  {
 		color: #dddddd;
 	}
-
 	.blog-post .post-meta {
-		margin: 5px 0 50px;
+		margin: 5px 0 70px;
 		font-weight: 400;
 		font-size: 16px;
 		color: #B1B1B1;
 		font-family: "Lora";
 		font-style: italic;
 	}
-
 	.blog-post .post-meta a {
 		color: #B1B1B1;
 	}
-
 	.blog-post .post-meta a:hover {
 		color: #fed136;
 	}
-
 	.blog-post .post-meta span {
 		padding-left: 15px;
 		padding-right: 15px;
 	}
-
 	.blog-post .post-meta span:first-child {
 		padding-left: 0;
 		padding-right: 15px;
 	}
-
 	.blog-post .post-meta i {
 		padding-right: 5px;
 		font-size: 12px;
 	}
-
 	.blog-post .read-more {
 		margin: 50px 0 40px;
 	}
-
 	.blog-post .read-more a {
 		display: inline-block;
 		padding: 12px 40px;
@@ -249,17 +218,15 @@ section:last-child {
 		-o-transition: all 0.2s ease-out;
 		transition: all 0.2s ease-out;
 	}
-
 	.blog-post .read-more a:hover {
 		background-color: #fed136;
 		border-color: #fed136;
 		color: #fff;
 	}
-
 	.blog-post .blog-post-text {
 		text-align: left;
+		margin: 120px 0 30px;
 	}
-
 	.blog-post .blog-post-text p {
 		text-align: justify;
 		font-size: 17px;
@@ -269,7 +236,6 @@ section:last-child {
 		letter-spacing: 0.1px;
 		margin-bottom: 30px;
 	}
-
 	/*- Sidebar -*/
 	.sidebar-title {
 		background-color: #2B2B2B;
@@ -283,36 +249,29 @@ section:last-child {
 		margin: 0 0 25px;
 		font-family: "Raleway", Sans-serif;
 	}
-
 	.sidebar-widget {
 		margin-bottom: 40px;
 	}
-
 	.sidebar-widget li {
 		font-size: 17px;
 		margin-bottom: 10px;
 	}
-
 	.widget-socials {
 		text-align: center;
 	}
-
 	.widget-socials a {
 		margin: 3px 8px;
 		padding: 5px;
 		font-size: 17px;
 		color: #3C3C3C;
 	}
-
 	.widget-about img {
 		width: 100%;
 	}
-
 	.widget-about h4 {
 		text-align: center;
 		margin: 20px 0 5px;
 	}
-
 	.widget-about .author-title {
 		font-size: 13px;
 		font-weight: 400;
@@ -320,14 +279,12 @@ section:last-child {
 		color: #B5B5B5;
 		text-align: center;
 	}
-
 	.widget-about p {
 		margin-top: 10px;
 		font-size: 17px;
 		line-height: 24px;
 		color: #000000;
 	}
-
 	.widget-post {
 		display: table;
 		margin: 0 0 20px 0;
@@ -336,13 +293,11 @@ section:last-child {
 		padding-bottom: 20px;
 		width: 100%;
 	}
-
 	.widget-post:last-child {
 		border-bottom: none;
 		padding-bottom: 0px;
 		margin: 0px;
 	}
-
 	.widget-post .post-image {
 		float: left;
 		width: 90px;
@@ -350,23 +305,19 @@ section:last-child {
 		position: relative;
 		margin-right: 20px;
 	}
-
 	.widget-review .post-image {
 		width: 70px;
 		margin-right: 15px;
 	}
-
 	.widget-post .post-body {
 		overflow: hidden;
 	}
-
 	.widget-post h2 {
 		margin: 0;
 		font-size: 14px;
 		font-weight: 500;
 		line-height: 20px;
 	}
-
 	.widget-post h2 a {
 		color: #4A4A4A;
 		-webkit-transition: all 0.2s ease-out;
@@ -374,11 +325,9 @@ section:last-child {
 		-o-transition: all 0.2s ease-out;
 		transition: all 0.2s ease-out;
 	}
-
 	.widget-post h2 a:hover {
 		color: #969696;
 	}
-
 	.widget-post .post-meta {
 		margin-top: 5px;
 		font-weight: 400;
@@ -387,15 +336,12 @@ section:last-child {
 		font-family: "Lora";
 		font-style: italic;
 	}
-
 	.widget-post .post-meta span {
 		margin-right: 8px;
 	}
-
 	.widget-post .post-meta span a {
 		color: #B1B1B1;
 	}
-
 	.section-title {
 		margin: 0 0 45px 0;
 		border-top: 1px solid #505050;
@@ -404,10 +350,8 @@ section:last-child {
 		font-weight: 300;
 		color: #272727;
 	}
-
 	.section-title span {
 	}
-
 	/*- Footer -*/
 	footer {
 		padding: 0;
@@ -419,11 +363,9 @@ section:last-child {
 		text-align: center;
 		border-top: 1px solid #CECECE;
 	}
-
 	footer .footer-socials {
 		margin: 60px 0 20px;
 	}
-
 	footer .footer-socials a {
 		display: inline-block;
 		margin-right: 5px;
@@ -440,12 +382,9 @@ section:last-child {
 		-o-transition: all 0.2s ease-out;
 		transition: all 0.2s ease-out;
 	}
-
 	footer .footer-socials a:hover {
 		background-color: #dddddd;
 	}
-
 	footer .footer-bottom {
 		padding: 10px 0 40px;
 	}
-}
