@@ -1,0 +1,8 @@
+<nav aria-label="Page navigation example" th:fragment="paging(paging, currentPageNo)" xmlns:th="http://www.thymeleaf.org">
+    <ul class="pagination justify-content-center">
+        <li class="page-item" th:each="pageNo : ${paging}" th:classappend="${pageNo == currentPageNo} ? 'page-item active' : 'page-item'">
+            <a class="page-link" href="#" th:if="${pageNo != currentPageNo}" th:href="@{|/?page=${pageNo}|}" th:text="${pageNo}">1</a>
+            <a class="page-link" href="javascript:void(0);" th:unless="${pageNo != currentPageNo}" th:text="${pageNo}">1</a>
+        </li>
+    </ul>
+</nav>
