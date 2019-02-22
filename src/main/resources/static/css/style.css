@@ -218,6 +218,10 @@ section:last-child {
 		-o-transition: all 0.2s ease-out;
 		transition: all 0.2s ease-out;
 	}
+	.blog-post .post-content {
+		font-size: 1.1em;
+		line-height: 2em;
+	}
 	.blog-post .read-more a:hover {
 		background-color: #fed136;
 		border-color: #fed136;
