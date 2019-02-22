@@ -242,7 +242,8 @@ section:last-child {
 	}
 	/*- Sidebar -*/
 	.sidebar-title {
-		background-color: #2B2B2B;
+		#background-color: #2B2B2B;
+		background-color: lightslategray;
 		color: #fff;
 		text-align: center;
 		text-transform: uppercase;
