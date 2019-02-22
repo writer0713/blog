@@ -25,6 +25,12 @@ public class MainController {
 		List<Post> posts = crawlService.getPostsBy(page);
 		List<String> paging = crawlService.getPaging(page);
 
+//		posts.stream().forEach(item -> {
+//			System.out.println(item.getTitle());
+//			System.out.println(item.getUrl());
+//			System.out.println(item.getContent());
+//			System.out.println("=============");
+//		});
 
 		model.addAttribute("posts", posts);
 		model.addAttribute("currentPageNo", page);
