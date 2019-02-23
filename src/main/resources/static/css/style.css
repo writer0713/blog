@@ -29,9 +29,14 @@ p {
 	line-height: 24px;
 	color: #000;
 }
-img {
-	max-width: 100%;
-	height: auto;
+/*img {*/
+	/*max-width: 100%;*/
+	/*height: auto;*/
+/*}*/
+img.image-fit {
+	object-fit: cover;
+	width: 100px;
+	height: 100px;
 }
 a {
 	color: #4A4A4A;

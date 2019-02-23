@@ -9,6 +9,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -75,9 +77,37 @@ public class CrawlServiceImpl implements CrawlService{
 		String date = postElement.select("span.se_publishDate, p.date").text();
 		String content = postElement.select("div.se-main-container, div.__se_component_area, div#postViewArea").html();
 
+		content = processMediaTag(content);
+
+
 		Post post = new Post(title, date, content);
 
 		return post;
+	}
+
+	private String processMediaTag(String content) {
+
+
+		Document doc = Jsoup.parse(content);
+
+		String og_link_url = doc.select("a.se-oglink-info").attr("href");
+		String encoded_og_thumbnail_url = doc.select("a.se-oglink-thumbnail > img").attr("src");
+		String decoded_og_thumbnail_url = thumbnailURLParsing(encoded_og_thumbnail_url);
+		String og_title = doc.select("strong.se-oglink-title").text();
+		String og_body = doc.select("p.se-oglink-summary").text();
+
+		String ogTag = makeOGTag(og_title, og_body, og_link_url, decoded_og_thumbnail_url);
+
+		doc.select("div.se-oglink").remove();
+		doc.append(ogTag);
+
+
+//		Element post = doc.select("div.blog-post-text").first();
+//
+//		post.select("div.se-oglink").remove();
+//		post.append(ogTag);
+
+		return doc.html();
 	}
 
 	private String getURLFrom(Element element) {
@@ -94,6 +124,53 @@ public class CrawlServiceImpl implements CrawlService{
 		}
 
 		return null;
+	}
+
+	private String makeOGTag(String og_title, String og_body, String og_link_url, String og_thumbnail_url) {
+
+		StringBuffer buffer = new StringBuffer();
+
+		buffer.append("<div class='media'>"); // start media tag
+
+		if (! StringUtils.isEmpty(og_thumbnail_url)) {
+			// add left thumbnail
+			buffer.append("<div class='media-left'>")
+							.append("<a href='").append(og_link_url).append("'>")
+							.append("<img class='media-object image-fit' src='").append(og_thumbnail_url).append("'></img>")
+							.append("</a>")
+							.append("</div>");
+		}
+
+
+
+		// add right side body
+		buffer.append("<div class='media-body'>")
+						.append("<a href='").append(og_link_url).append("'>")
+						.append("<h4 class='media-heading'>").append(og_title).append("</h4>")
+						.append(og_body)
+						.append("</div>");
+
+		buffer.append("</div>"); // end media tag
+
+		String html = buffer.toString();
+
+		return html;
+	}
+
+	public String thumbnailURLParsing(String url) {
+
+		String decoded = null;
+
+		try {
+			decoded = URLDecoder.decode(url, "utf-8");
+			decoded = decoded.replaceAll(".*\"(http.*?)\".*", "$1");
+		} catch(UnsupportedEncodingException e) {
+			e.printStackTrace();
+		}
+
+		if (StringUtils.isEmpty(decoded)) decoded = "";
+
+		return decoded;
 	}
 
 	private Elements getPosts(Document doc) {
