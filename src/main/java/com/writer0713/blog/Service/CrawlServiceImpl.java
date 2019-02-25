@@ -1,5 +1,6 @@
 package com.writer0713.blog.Service;
 
+import com.writer0713.blog.Model.OgTag;
 import com.writer0713.blog.Model.Post;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -13,6 +14,7 @@ import java.io.UnsupportedEncodingException;
 import java.net.URLDecoder;
 import java.util.List;
 import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 import java.util.stream.Stream;
 
 @Service
@@ -87,25 +89,29 @@ public class CrawlServiceImpl implements CrawlService{
 
 	private String processMediaTag(String content) {
 
-
 		Document doc = Jsoup.parse(content);
 
-		String og_link_url = doc.select("a.se-oglink-info").attr("href");
-		String encoded_og_thumbnail_url = doc.select("a.se-oglink-thumbnail > img").attr("src");
-		String decoded_og_thumbnail_url = thumbnailURLParsing(encoded_og_thumbnail_url);
-		String og_title = doc.select("strong.se-oglink-title").text();
-		String og_body = doc.select("p.se-oglink-summary").text();
+		Elements ogTags = doc.select("div.se-oglink");
 
-		String ogTag = makeOGTag(og_title, og_body, og_link_url, decoded_og_thumbnail_url);
+		List<String> ogTagElements = ogTags.stream()
+				.map(tag -> {
+					String og_link_url = tag.select("a.se-oglink-info").attr("href");
+					String og_thumbnail_url = tag.select("a.se-oglink-thumbnail > img").attr("src");
+					String og_title = tag.select("strong.se-oglink-title").text();
+					String og_body = tag.select("p.se-oglink-summary").text();
 
-		doc.select("div.se-oglink").remove();
-		doc.append(ogTag);
+					OgTag og = new OgTag(og_link_url, og_thumbnail_url, og_title, og_body);
+					return og;
+				})
+				.map(this::makeOGTagElement).collect(Collectors.toList());
 
-
-//		Element post = doc.select("div.blog-post-text").first();
-//
-//		post.select("div.se-oglink").remove();
-//		post.append(ogTag);
+		IntStream.range(0, ogTags.size())
+				.forEach(index -> {
+					String newOGTagStr = ogTagElements.get(index);
+					Element originOGTag = ogTags.get(index);
+					originOGTag.after(newOGTagStr);
+					originOGTag.remove();
+				});
 
 		return doc.html();
 	}
@@ -126,51 +132,30 @@ public class CrawlServiceImpl implements CrawlService{
 		return null;
 	}
 
-	private String makeOGTag(String og_title, String og_body, String og_link_url, String og_thumbnail_url) {
+	private String makeOGTagElement(OgTag tag) {
 
 		StringBuffer buffer = new StringBuffer();
 
 		buffer.append("<div class='media'>"); // start media tag
 
-		if (! StringUtils.isEmpty(og_thumbnail_url)) {
-			// add left thumbnail
-			buffer.append("<div class='media-left'>")
-							.append("<a href='").append(og_link_url).append("'>")
-							.append("<img class='media-object image-fit' src='").append(og_thumbnail_url).append("'></img>")
-							.append("</a>")
-							.append("</div>");
-		}
-
-
+		// add left thumbnail
+		buffer.append("<div class='media-left'>")
+				.append("<a href='").append(tag.getLinkURL()).append("'>")
+				.append("<img class='media-object' src='").append(tag.getThumbnailURL()).append("' style='height: 100px'></img>")
+				.append("</a>")
+				.append("</div>");
 
 		// add right side body
 		buffer.append("<div class='media-body'>")
-						.append("<a href='").append(og_link_url).append("'>")
-						.append("<h4 class='media-heading'>").append(og_title).append("</h4>")
-						.append(og_body)
-						.append("</div>");
+				.append("<h4 class='media-heading'>").append(tag.getTitle()).append("</h4>")
+				.append("<a href='").append(tag.getLinkURL()).append("'>").append(tag.getBody()).append("</a>")
+				.append("</div>");
 
 		buffer.append("</div>"); // end media tag
 
 		String html = buffer.toString();
 
 		return html;
-	}
-
-	public String thumbnailURLParsing(String url) {
-
-		String decoded = null;
-
-		try {
-			decoded = URLDecoder.decode(url, "utf-8");
-			decoded = decoded.replaceAll(".*\"(http.*?)\".*", "$1");
-		} catch(UnsupportedEncodingException e) {
-			e.printStackTrace();
-		}
-
-		if (StringUtils.isEmpty(decoded)) decoded = "";
-
-		return decoded;
 	}
 
 	private Elements getPosts(Document doc) {
