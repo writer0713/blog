@@ -130,9 +130,9 @@ public class JsoupTest {
 
 		// add right side body
 		buffer.append("<div class='media-body'>")
-						.append("<h4 class='media-heading'>").append(tag.getTitle()).append("</h4>")
-						.append(tag.getBody())
-						.append("</div>");
+				.append("<h4 class='media-heading'>").append(tag.getTitle()).append("</h4>")
+				.append("<a href='").append(tag.getLinkURL()).append("'>").append(tag.getBody()).append("</a>")
+				.append("</div>");
 
 		buffer.append("</div>"); // end media tag
 
