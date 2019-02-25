@@ -245,6 +245,19 @@ section:last-child {
 		letter-spacing: 0.1px;
 		margin-bottom: 30px;
 	}
+	.blog-post .media {
+		width: 450px;
+		border: 1px solid rgba(0,0,0,.1);
+		margin: 20px
+	}
+	.blog-post .media .media-body {
+		padding: 10px 10px 5px;
+	}
+
+	.blog-post .media .media-heading {
+		margin-top: 10px;
+		margin-bottom: 10px
+	}
 	/*- Sidebar -*/
 	.sidebar-title {
 		#background-color: #2B2B2B;
