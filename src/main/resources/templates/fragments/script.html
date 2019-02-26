@@ -16,7 +16,9 @@
         $('.__se_code_view').each(function() {
 
             let $this = $(this);
-            let $code = js_beautify($this.html());
+            let $code = js_beautify($this.text());
+            $code = css_beautify($this.text());
+            $code = html_beautify($this.text());
             let $lang = $this.attr('class').replace(/(.*) language-(.*)/gim, '$2');
 
             $this.empty();
