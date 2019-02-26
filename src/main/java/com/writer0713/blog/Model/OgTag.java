@@ -21,10 +21,12 @@ public class OgTag {
 	private String body;
 
 	public OgTag(String linkURL, String thumbnailURL, String title, String body) {
+		int length = body.length() < 44 ? body.length() : 44;
+
 		this.linkURL = linkURL;
 		this.thumbnailURL = this.thumbnailURLParsing(thumbnailURL);
 		this.title = title;
-		this.body = body.substring(0, 44);
+		this.body = body.substring(0, length);
 	}
 
 	private String thumbnailURLParsing(String url) {
