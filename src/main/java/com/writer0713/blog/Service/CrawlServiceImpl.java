@@ -83,10 +83,16 @@ public class CrawlServiceImpl implements CrawlService{
 
 		content = processMediaTag(content);
 
+		content = processImageTag(content);
+
 
 		Post post = new Post(title, date, content);
 
 		return post;
+	}
+
+	private String processImageTag(String content) {
+		return content.replaceAll("postfiles.", "mblogthumb-phinf.");
 	}
 
 	private String processMediaTag(String content) {
