@@ -73,6 +73,8 @@ public class CrawlServiceImpl implements CrawlService{
 		String requestURL = URL_FOR_ONE_POST.concat(no);
 
 		Document doc = getDocument(requestURL);
+		doc.outputSettings().prettyPrint(false);
+
 		Element postElement = doc.select("div#post_1").first();
 
 		String title = postElement.select("div.se-title-text, div.se_title, span.itemSubjectBoldfont").text();
@@ -90,6 +92,7 @@ public class CrawlServiceImpl implements CrawlService{
 	private String processMediaTag(String content) {
 
 		Document doc = Jsoup.parse(content);
+		doc.outputSettings().prettyPrint(false);
 
 		Elements ogTags = doc.select("div.se-oglink");
 
@@ -124,7 +127,9 @@ public class CrawlServiceImpl implements CrawlService{
 
 	private Document getDocument(String requestURL) {
 		try {
-			return Jsoup.connect(requestURL).get();
+			return Jsoup.connect(requestURL)
+							.userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
+							.get();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

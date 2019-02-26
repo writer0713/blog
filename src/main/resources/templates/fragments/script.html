@@ -6,30 +6,23 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.bxslider.js"></script>
     <script src="/js/mooz.scripts.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.9.0-beta5/beautify.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.9.0-beta5/beautify-css.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/js-beautify/1.9.0-beta5/beautify-html.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/mode/javascript/javascript.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/mode/clike/clike.min.js"></script>
     <script>
         $('.__se_code_view').each(function() {
 
-            let $this = $(this);
-            let $code = js_beautify($this.text());
-            $code = css_beautify($this.text());
-            $code = html_beautify($this.text());
-            let $lang = $this.attr('class').replace(/(.*) language-(.*)/gim, '$2');
+            const $this = $(this);
+            const $code = $this.text();
 
             $this.empty();
 
-            let myCodeMirror = CodeMirror(this, {
+            const myCodeMirror = CodeMirror(this, {
                 value: $code,
                 mode: 'text/x-java',
+                theme: 'material',
                 lineNumbers: true,
                 lineWrapping: true,
                 scrollbarStyle: null,
-                // lineSeparator: '(public|privata)',
                 enableCodeFormatting: true,
                 readOnly: true
             });

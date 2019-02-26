@@ -1,7 +1,5 @@
 package com.writer0713.blog;
 
-import com.google.googlejavaformat.java.Formatter;
-import com.google.googlejavaformat.java.FormatterException;
 import com.writer0713.blog.Model.OgTag;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -153,13 +151,13 @@ public class JsoupTest {
 
 	@Test
 	public void code() throws IOException {
-		String url = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=221410902684";
+		String url = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=221460848851";
 		Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36").get();
+		doc.outputSettings().prettyPrint(false);
 
-		Element code = doc.select("div.__se_code_view").first();
-		String text = code.text();
-		System.out.println(text);
-		System.out.println(text.replaceAll("(@|public|private)gim", "\\n$1"));
+		Element code = doc.select("div.__se_code_view").last();
+		System.out.println(code.html());
+//		System.out.println(text.replaceAll("(@|public|private)gim", "\\n$1"));
 	}
 
 }
