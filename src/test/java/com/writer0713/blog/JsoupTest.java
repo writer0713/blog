@@ -1,5 +1,7 @@
 package com.writer0713.blog;
 
+import com.google.googlejavaformat.java.Formatter;
+import com.google.googlejavaformat.java.FormatterException;
 import com.writer0713.blog.Model.OgTag;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -147,6 +149,17 @@ public class JsoupTest {
 		String url = "https://dthumb-phinf.pstatic.net/?src=%22https%3A%2F%2Favatars1.githubusercontent.com%2Fu%2F22543357%3Fs%3D400%26v%3D4%22&type=ff120";
 		String decoded = URLDecoder.decode(url, "utf-8");
 		System.out.println(decoded.replaceAll(".*\"(http.*?)\".*", "$1"));
+	}
+
+	@Test
+	public void code() throws IOException {
+		String url = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=221410902684";
+		Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36").get();
+
+		Element code = doc.select("div.__se_code_view").first();
+		String text = code.text();
+		System.out.println(text);
+		System.out.println(text.replaceAll("(@|public|private)gim", "\\n$1"));
 	}
 
 }

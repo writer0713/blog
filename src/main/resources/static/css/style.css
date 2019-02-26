@@ -258,6 +258,16 @@ section:last-child {
 		margin-top: 10px;
 		margin-bottom: 10px
 	}
+	.blog-post .__se_code_view {
+		white-space: pre;
+		word-spacing: normal;
+		word-break: break-all;
+		word-wrap: normal;
+		tab-size: 4;
+		hyphens: none;
+		padding: 12px 17px;
+		overflow: auto;
+	}
 	/*- Sidebar -*/
 	.sidebar-title {
 		#background-color: #2B2B2B;
