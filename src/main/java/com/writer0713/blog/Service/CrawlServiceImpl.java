@@ -100,14 +100,14 @@ public class CrawlServiceImpl implements CrawlService{
 		Document doc = Jsoup.parse(content);
 		doc.outputSettings().prettyPrint(false);
 
-		Elements ogTags = doc.select("div.se-oglink");
+		Elements ogTags = doc.select("div.se-oglink, div.se_oglink");
 
 		List<String> ogTagElements = ogTags.stream()
 				.map(tag -> {
-					String og_link_url = tag.select("a.se-oglink-info").attr("href");
-					String og_thumbnail_url = tag.select("a.se-oglink-thumbnail > img").attr("src");
-					String og_title = tag.select("strong.se-oglink-title").text();
-					String og_body = tag.select("p.se-oglink-summary").text();
+					String og_link_url = tag.select("a.se-oglink-info, a.se_og_box").attr("href");
+					String og_thumbnail_url = tag.select("a.se-oglink-thumbnail > img, div.se_og_thumb > img").attr("src");
+					String og_title = tag.select("strong.se-oglink-title, div.se_og_tit").text();
+					String og_body = tag.select("p.se-oglink-summary, div.se_og_desc").text();
 
 					OgTag og = new OgTag(og_link_url, og_thumbnail_url, og_title, og_body);
 					return og;
