@@ -130,10 +130,11 @@ public class CrawlServiceImpl implements CrawlService{
 	}
 
 	private String processYoutubeTag(String content) {
-		ObjectMapper mapper = new ObjectMapper();
 
 		Document doc = Jsoup.parse(content);
 		doc.outputSettings().prettyPrint(false);
+
+		ObjectMapper mapper = new ObjectMapper();
 
 		Elements embeds = doc.select("div.se-oembed");
 		embeds.stream().forEach(embedTag -> {

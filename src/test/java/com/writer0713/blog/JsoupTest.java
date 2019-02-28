@@ -175,6 +175,8 @@ public class JsoupTest {
 				.get();
 		doc.outputSettings().prettyPrint(false);
 
+		ObjectMapper mapper = new ObjectMapper();
+
 		Elements embeds = doc.select("div.se-oembed");
 		embeds.stream().forEach(embedTag -> {
 			Element scriptTag = embedTag.selectFirst("script.__se_module_data");
