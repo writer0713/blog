@@ -29,9 +29,14 @@ p {
 	line-height: 24px;
 	color: #000;
 }
-img {
-	max-width: 100%;
-	height: auto;
+/*img {*/
+	/*max-width: 100%;*/
+	/*height: auto;*/
+/*}*/
+img.image-fit {
+	object-fit: cover;
+	width: 100px;
+	height: 100px;
 }
 a {
 	color: #4A4A4A;
@@ -239,6 +244,29 @@ section:last-child {
 		color: #000;
 		letter-spacing: 0.1px;
 		margin-bottom: 30px;
+	}
+	.blog-post .media {
+		/*width: 500px;*/
+		border: 1px solid rgba(0,0,0,.1);
+		margin: 60px 0;
+	}
+	.blog-post .media .media-body {
+		padding: 10px 10px 5px;
+	}
+
+	.blog-post .media .media-heading {
+		margin-top: 10px;
+		margin-bottom: 10px
+	}
+	.blog-post .__se_code_view {
+		white-space: pre;
+		word-spacing: normal;
+		word-break: break-all;
+		word-wrap: normal;
+		tab-size: 4;
+		hyphens: none;
+		padding: 12px 17px;
+		overflow: auto;
 	}
 	/*- Sidebar -*/
 	.sidebar-title {

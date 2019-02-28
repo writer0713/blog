@@ -6,4 +6,27 @@
     <script src="/js/bootstrap.min.js"></script>
     <script src="/js/jquery.bxslider.js"></script>
     <script src="/js/mooz.scripts.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/codemirror.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/mode/clike/clike.min.js"></script>
+    <script>
+        $('.__se_code_view').each(function() {
+
+            const $this = $(this);
+            const $code = $this.text();
+
+            $this.empty();
+
+            const myCodeMirror = CodeMirror(this, {
+                value: $code,
+                mode: 'text/x-java',
+                theme: 'material',
+                lineNumbers: true,
+                lineWrapping: true,
+                scrollbarStyle: null,
+                enableCodeFormatting: true,
+                readOnly: true
+            });
+
+        });
+    </script>
 </th:block>
