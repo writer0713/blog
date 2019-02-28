@@ -1,9 +1,14 @@
 package com.writer0713.blog;
 
+import com.fasterxml.jackson.core.JsonFactory;
+import com.fasterxml.jackson.core.JsonParser;
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.writer0713.blog.Model.OgTag;
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
+import org.jsoup.parser.Parser;
 import org.jsoup.select.Elements;
 import org.junit.Test;
 
@@ -152,12 +157,54 @@ public class JsoupTest {
 	@Test
 	public void code() throws IOException {
 		String url = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=221460848851";
-		Document doc = Jsoup.connect(url).userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36").get();
+		Document doc = Jsoup.connect(url)
+				.userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
+				.get();
 		doc.outputSettings().prettyPrint(false);
 
 		Element code = doc.select("div.__se_code_view").last();
 		System.out.println(code.html());
 //		System.out.println(text.replaceAll("(@|public|private)gim", "\\n$1"));
+	}
+
+	@Test
+	public void youtube() throws IOException {
+		String url = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=221441512766";
+		Document doc = Jsoup.connect(url)
+				.userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
+				.get();
+		doc.outputSettings().prettyPrint(false);
+
+		Elements embeds = doc.select("div.se-oembed");
+		embeds.stream().forEach(embedTag -> {
+			Element scriptTag = embedTag.selectFirst("script.__se_module_data");
+			String jsonStr = scriptTag.attr("data-module");
+
+			try {
+				JsonNode node = mapper.readTree(jsonStr);
+				String iframeStr = node.findValue("html").toString();
+				String src = iframeStr.replaceAll(".*(http.*?)\\\\.*", "$1");
+				String youtube = makeYoutubeTagElement(src);
+				embedTag.append(youtube);
+				embedTag.select("div.se-module-oembed").remove();
+				scriptTag.remove();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
+
+		System.out.println(doc);
+	}
+
+	private String makeYoutubeTagElement(String src) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<iframe src='").append(src).append("'")
+				.append("width='100%' height='600px'")
+				.append("style='margin: 60px;'")
+				.append(" frameborder=0 allow='accelerometer; autoply; encrypted-media; gyroscpe; picture-in-picture' allowfullscreen>")
+				.append("</iframe>");
+
+		return buffer.toString();
 	}
 
 }

@@ -1,5 +1,7 @@
 package com.writer0713.blog.Service;
 
+import com.fasterxml.jackson.databind.JsonNode;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import com.writer0713.blog.Model.OgTag;
 import com.writer0713.blog.Model.Post;
 import org.jsoup.Jsoup;
@@ -85,6 +87,8 @@ public class CrawlServiceImpl implements CrawlService{
 
 		content = processImageTag(content);
 
+		content = processYoutubeTag(content);
+
 
 		Post post = new Post(title, date, content);
 
@@ -121,6 +125,33 @@ public class CrawlServiceImpl implements CrawlService{
 					originOGTag.after(newOGTagStr);
 					originOGTag.remove();
 				});
+
+		return doc.html();
+	}
+
+	private String processYoutubeTag(String content) {
+		ObjectMapper mapper = new ObjectMapper();
+
+		Document doc = Jsoup.parse(content);
+		doc.outputSettings().prettyPrint(false);
+
+		Elements embeds = doc.select("div.se-oembed");
+		embeds.stream().forEach(embedTag -> {
+			Element scriptTag = embedTag.selectFirst("script.__se_module_data");
+			String jsonStr = scriptTag.attr("data-module");
+
+			try {
+				JsonNode node = mapper.readTree(jsonStr);
+				String iframeStr = node.findValue("html").toString();
+				String src = iframeStr.replaceAll(".*(http.*?)\\\\.*", "$1");
+				String youtube = makeYoutubeTagElement(src);
+				embedTag.append(youtube);
+				embedTag.select("div.se-module-oembed").remove();
+				scriptTag.remove();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		});
 
 		return doc.html();
 	}
@@ -167,6 +198,17 @@ public class CrawlServiceImpl implements CrawlService{
 		String html = buffer.toString();
 
 		return html;
+	}
+
+	private String makeYoutubeTagElement(String src) {
+		StringBuffer buffer = new StringBuffer();
+		buffer.append("<iframe src='").append(src).append("'")
+				.append("width='100%' height='600px'")
+				.append("style='margin: 60px;'")
+				.append(" frameborder=0 allow='accelerometer; autoply; encrypted-media; gyroscpe; picture-in-picture' allowfullscreen>")
+				.append("</iframe>");
+
+		return buffer.toString();
 	}
 
 	private Elements getPosts(Document doc) {
