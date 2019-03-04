@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -22,8 +23,10 @@ import java.util.stream.Stream;
 @Service
 public class CrawlServiceImpl implements CrawlService{
 
-	private static final String URL_FOR_POSTS = "https://blog.naver.com/PostList.nhn?from=postList&blogId=writer0713&categoryNo=0&currentPage=";
-	private static final String URL_FOR_ONE_POST = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=";
+	@Value("${blog.url.posts}")
+	private String URL_FOR_POSTS;
+	@Value("${blog.url.post}")
+	private String URL_FOR_ONE_POST;
 
 	public List<Post> getPostsBy(String pageNo) {
 
