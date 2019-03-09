@@ -179,6 +179,9 @@ section:last-child {
 	.blog-post .se-table {
 		margin: 40px 0;
 	}
+	.blog-post .se-code {
+		margin: 40px 0;
+	}
 	.blog-post .post-meta {
 		margin: 5px 0 70px;
 		font-weight: 400;
