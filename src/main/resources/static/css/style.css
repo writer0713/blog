@@ -299,6 +299,12 @@ section:last-child {
 		vertical-align: baseline;
 	}
 
+	/* CodeMirror -*/
+	.CodeMirror {
+		border: 1px solid #eee;
+		height: auto;
+	}
+
 	/*- Sidebar -*/
 	.sidebar-title {
 		#background-color: #2B2B2B;
