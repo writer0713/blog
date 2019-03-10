@@ -166,7 +166,7 @@ section:last-child {
 		line-height: 30px;
 		color: #000;
 	}
-	.blog-post .blog-post-body div a {
+	.blog-post .blog-post-body div.blog-post-text a {
 		color: #337ab7;
 		-webkit-transition: all 0.2s ease-out;
 		-moz-transition: all 0.2s ease-out;
