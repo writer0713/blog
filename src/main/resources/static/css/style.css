@@ -254,6 +254,12 @@ section:last-child {
 	.blog-post .blog-post-text .se-component, .se_component {
 		margin: 40px 0;
 	}
+	.blog-post .blog-post-text .se-sectionTitle {
+		margin-top: 100px;
+	}
+	.blog-post .se-sectionTitle p {
+		font-size: 30px;
+	}
 	.blog-post .se-module-horizontalLine {
 		padding: 30px 0;
 	}
