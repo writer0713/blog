@@ -176,6 +176,12 @@ section:last-child {
 	.blog-post .blog-post-body a:hover  {
 		color: #dddddd;
 	}
+	.blog-post .se-table {
+		margin: 40px 0;
+	}
+	.blog-post .se-code {
+		margin: 40px 0;
+	}
 	.blog-post .post-meta {
 		margin: 5px 0 70px;
 		font-weight: 400;
@@ -243,7 +249,10 @@ section:last-child {
 		line-height: 28px;
 		color: #000;
 		letter-spacing: 0.1px;
-		margin-bottom: 30px;
+		/*margin-bottom: 30px;*/
+	}
+	.blog-post .se-module-horizontalLine {
+		padding: 30px 0;
 	}
 	.blog-post .media {
 		/*width: 500px;*/
@@ -268,6 +277,34 @@ section:last-child {
 		padding: 12px 17px;
 		overflow: auto;
 	}
+	.blog-post .se-table-content {
+		border: solid #d2d2d2;
+		border-width: 1px 0 0 1px;
+		width: 100%;
+		border-collapse: separate;
+		text-align: left;
+	}
+	.blog-post .se-table-content .se-cell {
+		border: solid #d2d2d2;
+		border-width: 0 1px 1px 0;
+		padding: 10px;
+		box-sizing: border-box;
+		vertical-align: middle;
+	}
+	.blog-post .se-table-content tr {
+		height: 40px;
+		margin: 0;
+		padding: 0;
+		border: 0;
+		vertical-align: baseline;
+	}
+
+	/* CodeMirror -*/
+	.CodeMirror {
+		border: 1px solid #eee;
+		height: auto;
+	}
+
 	/*- Sidebar -*/
 	.sidebar-title {
 		#background-color: #2B2B2B;

@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -89,6 +87,8 @@ public class CrawlServiceImpl implements CrawlService{
 
 		content = processYoutubeTag(content);
 
+		content = filterEmptyPTags(content);
+
 
 		Post post = new Post(title, date, content);
 
@@ -153,6 +153,23 @@ public class CrawlServiceImpl implements CrawlService{
 				e.printStackTrace();
 			}
 		});
+
+		return doc.html();
+	}
+
+	private String filterEmptyPTags(String content) {
+
+		Document doc = Jsoup.parse(content);
+		doc.outputSettings().prettyPrint(false);
+
+		Elements pTags = doc.select("p.se-text-paragraph");
+
+		pTags.forEach(tag -> {
+			if(StringUtils.isEmpty(tag.text())) {
+				tag.remove();
+			}
+		});
+
 
 		return doc.html();
 	}
