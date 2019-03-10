@@ -12,8 +12,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
 import java.io.IOException;
-import java.io.UnsupportedEncodingException;
-import java.net.URLDecoder;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -89,6 +87,8 @@ public class CrawlServiceImpl implements CrawlService{
 
 		content = processYoutubeTag(content);
 
+		content = filterEmptyPTags(content);
+
 
 		Post post = new Post(title, date, content);
 
@@ -104,14 +104,14 @@ public class CrawlServiceImpl implements CrawlService{
 		Document doc = Jsoup.parse(content);
 		doc.outputSettings().prettyPrint(false);
 
-		Elements ogTags = doc.select("div.se-oglink, div.se_oglink");
+		Elements ogTags = doc.select("div.se-oglink, div.se_oglink, div.og");
 
 		List<String> ogTagElements = ogTags.stream()
 				.map(tag -> {
-					String og_link_url = tag.select("a.se-oglink-info, a.se_og_box").attr("href");
-					String og_thumbnail_url = tag.select("a.se-oglink-thumbnail > img, div.se_og_thumb > img").attr("src");
-					String og_title = tag.select("strong.se-oglink-title, div.se_og_tit").text();
-					String og_body = tag.select("p.se-oglink-summary, div.se_og_desc").text();
+					String og_link_url = tag.select("a.se-oglink-info, a.se_og_box, div.thumb a").attr("href");
+					String og_thumbnail_url = tag.select("a.se-oglink-thumbnail > img, div.se_og_thumb > img, div.thumb img").attr("src");
+					String og_title = tag.select("strong.se-oglink-title, div.se_og_tit, div.tit").text();
+					String og_body = tag.select("p.se-oglink-summary, div.se_og_desc, div.dsc").text();
 
 					OgTag og = new OgTag(og_link_url, og_thumbnail_url, og_title, og_body);
 					return og;
@@ -157,6 +157,23 @@ public class CrawlServiceImpl implements CrawlService{
 		return doc.html();
 	}
 
+	private String filterEmptyPTags(String content) {
+
+		Document doc = Jsoup.parse(content);
+		doc.outputSettings().prettyPrint(false);
+
+		Elements pTags = doc.select("p.se-text-paragraph");
+
+		pTags.forEach(tag -> {
+			if(StringUtils.isEmpty(tag.text())) {
+				tag.remove();
+			}
+		});
+
+
+		return doc.html();
+	}
+
 	private String getURLFrom(Element element) {
 		String url = element.select("a.url").attr("title");
 		if (StringUtils.isEmpty(url)) url = element.select("a.fil5").text();
@@ -184,7 +201,7 @@ public class CrawlServiceImpl implements CrawlService{
 		// add left thumbnail
 		buffer.append("<div class='media-left'>")
 				.append("<a href='").append(tag.getLinkURL()).append("'>")
-				.append("<img class='media-object' src='").append(tag.getThumbnailURL()).append("' style='height: 100px'></img>")
+				.append("<img class='media-object image-fit' src='").append(tag.getThumbnailURL()).append("' style='height: 100px'></img>")
 				.append("</a>")
 				.append("</div>");
 
