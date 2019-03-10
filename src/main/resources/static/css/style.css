@@ -251,7 +251,7 @@ section:last-child {
 		letter-spacing: 0.1px;
 		/*margin-bottom: 30px;*/
 	}
-	.blog-post .blog-post-text .se-component {
+	.blog-post .blog-post-text .se-component, .se_component {
 		margin: 40px 0;
 	}
 	.blog-post .se-module-horizontalLine {

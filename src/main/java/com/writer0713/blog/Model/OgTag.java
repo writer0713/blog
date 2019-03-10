@@ -26,7 +26,7 @@ public class OgTag {
 		this.linkURL = linkURL;
 		this.thumbnailURL = this.thumbnailURLParsing(thumbnailURL);
 		this.title = title;
-		this.body = body.substring(0, length);
+		this.body = body.substring(0, length).concat("  ...");
 	}
 
 	private String thumbnailURLParsing(String url) {
