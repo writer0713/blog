@@ -176,12 +176,12 @@ section:last-child {
 	.blog-post .blog-post-body a:hover  {
 		color: #dddddd;
 	}
-	.blog-post .se-table {
-		margin: 40px 0;
-	}
-	.blog-post .se-code {
-		margin: 40px 0;
-	}
+	/*.blog-post .se-table {*/
+		/*margin: 40px 0;*/
+	/*}*/
+	/*.blog-post .se-code {*/
+		/*margin: 40px 0;*/
+	/*}*/
 	.blog-post .post-meta {
 		margin: 5px 0 70px;
 		font-weight: 400;
@@ -250,6 +250,9 @@ section:last-child {
 		color: #000;
 		letter-spacing: 0.1px;
 		/*margin-bottom: 30px;*/
+	}
+	.blog-post .blog-post-text .se-component {
+		margin: 40px 0;
 	}
 	.blog-post .se-module-horizontalLine {
 		padding: 30px 0;
