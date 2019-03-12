@@ -340,6 +340,7 @@ section:last-child {
 	.sidebar-widget li {
 		font-size: 17px;
 		margin-bottom: 10px;
+		list-style: none;
 	}
 	.widget-socials {
 		text-align: center;

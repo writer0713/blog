@@ -1,4 +1,4 @@
-<div class="col-md-4 sidebar-gutter" th:fragment="aside" xmlns:th="http://www.thymeleaf.org">
+<div class="col-md-4 sidebar-gutter" th:fragment="aside(categoryNo)" xmlns:th="http://www.thymeleaf.org">
     <aside>
         <!-- sidebar-widget -->
         <div class="sidebar-widget">
@@ -11,67 +11,6 @@
                 <p>프로그래밍을 즐기는 사람입니다.</p>
             </div>
         </div>
-        <!-- sidebar-widget -->
-        <!--<div class="sidebar-widget">-->
-            <!--<h3 class="sidebar-title">Featured Posts</h3>-->
-            <!--<div class="widget-container">-->
-                <!--<article class="widget-post">-->
-                    <!--<div class="post-image">-->
-                        <!--<a href="/post"><img src="/images/90x60-1.jpg" alt=""></a>-->
-                    <!--</div>-->
-                    <!--<div class="post-body">-->
-                        <!--<h2><a href="/post">The State of the Word 2014</a></h2>-->
-                        <!--<div class="post-meta">-->
-                            <!--<span><i class="fa fa-clock-o"></i> 2. august 2015</span> <span><a href="/post"><i class="fa fa-comment-o"></i> 23</a></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</article>-->
-                <!--<article class="widget-post">-->
-                    <!--<div class="post-image">-->
-                        <!--<a href="/post"><img src="/images/90x60-2.jpg" alt=""></a>-->
-                    <!--</div>-->
-                    <!--<div class="post-body">-->
-                        <!--<h2><a href="/post">Why The Muppets Needs to Channel 30 Rock</a></h2>-->
-                        <!--<div class="post-meta">-->
-                            <!--<span><i class="fa fa-clock-o"></i> 2. august 2015</span> <span><a href="/post"><i class="fa fa-comment-o"></i> 23</a></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</article>-->
-                <!--<article class="widget-post">-->
-                    <!--<div class="post-image">-->
-                        <!--<a href="/post"><img src="/images/90x60-3.jpg" alt=""></a>-->
-                    <!--</div>-->
-                    <!--<div class="post-body">-->
-                        <!--<h2><a href="/post">The State of the Word 2014</a></h2>-->
-                        <!--<div class="post-meta">-->
-                            <!--<span><i class="fa fa-clock-o"></i> 2. august 2015</span> <span><a href="/post"><i class="fa fa-comment-o"></i> 23</a></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</article>-->
-                <!--<article class="widget-post">-->
-                    <!--<div class="post-image">-->
-                        <!--<a href="/post"><img src="/images/90x60-4.jpg" alt=""></a>-->
-                    <!--</div>-->
-                    <!--<div class="post-body">-->
-                        <!--<h2><a href="/post">Vintage-Inspired Finds for Your Home</a></h2>-->
-                        <!--<div class="post-meta">-->
-                            <!--<span><i class="fa fa-clock-o"></i> 2. august 2015</span> <span><a href="/post"><i class="fa fa-comment-o"></i> 23</a></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</article>-->
-                <!--<article class="widget-post">-->
-                    <!--<div class="post-image">-->
-                        <!--<a href="/post"><img src="/images/90x60-5.jpg" alt=""></a>-->
-                    <!--</div>-->
-                    <!--<div class="post-body">-->
-                        <!--<h2><a href="/post">The State of the Word 2014</a></h2>-->
-                        <!--<div class="post-meta">-->
-                            <!--<span><i class="fa fa-clock-o"></i> 2. august 2015</span> <span><a href="/post"><i class="fa fa-comment-o"></i> 23</a></span>-->
-                        <!--</div>-->
-                    <!--</div>-->
-                <!--</article>-->
-            <!--</div>-->
-        <!--</div>-->
 
         <!-- sidebar-widget -->
         <div class="sidebar-widget">
@@ -81,9 +20,6 @@
                     <a href="https://www.facebook.com/profile.php?id=100002444318532" target="_blank"><i class="fa fa-facebook"></i></a>
                     <a href="https://www.instagram.com/writer0713/" target="_blank"><i class="fa fa-instagram"></i></a>
                     <a href="https://github.com/writer0713" target="_blank"><i class="fa fa-github"></i></a>
-                    <!--<a href="#"><i class="fa fa-twitter"></i></a>-->
-                    <!--<a href="#"><i class="fa fa-google-plus"></i></a>-->
-                    <!--<a href="#"><i class="fa fa-dribbble"></i></a>-->
                 </div>
             </div>
         </div>
@@ -92,9 +28,22 @@
             <h3 class="sidebar-title">Categories</h3>
             <div class="widget-container">
                 <ul>
-                    <li><a href="/">Home</a></li>
-                    <li><a href="/post">Post</a></li>
-                    <li><a href="/about">About Me</a></li>
+                    <li><a href="/"><i th:if="${categoryNo == '0'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   전체보기</a></li>
+                    <li><a href="/?categoryNo=46"><i th:if="${categoryNo == '46'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   TO ME</a></li>
+                    <li><a href="/?categoryNo=6&parentCategoryNo=6"><i th:if="${categoryNo == '6'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   DIARY</a></li>
+                    <li><a href="/?categoryNo=7"><i th:if="${categoryNo == '7'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   GOAL</a></li>
+                    <li><a href="/?categoryNo=154"><i th:if="${categoryNo == '154'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   BOOK REVIEW</a></li>
+                    <li><a href="/?categoryNo=58&parentCategoryNo=58"><i th:if="${categoryNo == '58'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   JAVA</a></li>
+                    <li><a href="/?categoryNo=108"><i th:if="${categoryNo == '108'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   PYTHON</a></li>
+                    <li><a href="/?categoryNo=119"><i th:if="${categoryNo == '119'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   SWIFT</a></li>
+                    <li><a href="/?categoryNo=120"><i th:if="${categoryNo == '120'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   MYSQL</a></li>
+                    <li><a href="/?categoryNo=82&parentCategoryNo=82"><i th:if="${categoryNo == '82'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   JS</a></li>
+                    <li><a href="/?categoryNo=110"><i th:if="${categoryNo == '110'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   GIT</a></li>
+                    <li><a href="/?categoryNo=116"><i th:if="${categoryNo == '116'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   REGEX</a></li>
+                    <li><a href="/?categoryNo=140"><i th:if="${categoryNo == '140'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   DESIGN PATTERN</a></li>
+                    <li><a href="/?categoryNo=118"><i th:if="${categoryNo == '118'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   ETC</a></li>
+                    <li><a href="/?categoryNo=102"><i th:if="${categoryNo == '102'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   LINUX</a></li>
+                    <li><a href="/?categoryNo=111"><i th:if="${categoryNo == '111'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   MAC</a></li>
                 </ul>
             </div>
         </div>
