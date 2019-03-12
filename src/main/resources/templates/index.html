@@ -19,7 +19,7 @@
 				<div class="col-md-8">
 					<article class="blog-post" th:replace="fragments/article :: article(${posts})"></article>
 				</div>
-				<div class="col-md-4 sidebar-gutter" th:replace="fragments/sidebar :: aside"></div>
+				<div class="col-md-4 sidebar-gutter" th:replace="fragments/sidebar :: aside ( ${categoryNo} )"></div>
 			</div>
 		</section>
 		<section>

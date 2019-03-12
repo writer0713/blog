@@ -20,12 +20,12 @@ import java.util.stream.Stream;
 @Service
 public class CrawlServiceImpl implements CrawlService{
 
-	private static final String URL_FOR_POSTS = "https://blog.naver.com/PostList.nhn?from=postList&blogId=writer0713&categoryNo=0&currentPage=";
+	private static final String URL_FOR_POSTS = "https://blog.naver.com/PostList.nhn?from=postList&blogId=writer0713&"; // categoryNo=0&currentPage=
 	private static final String URL_FOR_ONE_POST = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=";
 
-	public List<Post> getPostsBy(String pageNo) {
+	public List<Post> getPostsBy(String pageNo, String categoryNo, String parentCategoryNo) {
 
-		String requestURL = URL_FOR_POSTS.concat(pageNo);
+		String requestURL = getURLForPosts(pageNo, categoryNo, parentCategoryNo);
 
 		Document doc = this.getDocument(requestURL);
 		Elements postElements = this.getPosts(doc);
@@ -48,9 +48,9 @@ public class CrawlServiceImpl implements CrawlService{
 		return posts;
 	}
 
-	public List<String> getPaging(String pageNo) {
+	public List<String> getPaging(String pageNo, String categoryNo, String parentCategoryNo) {
 
-		String requestURL = URL_FOR_POSTS.concat(pageNo);
+		String requestURL = getURLForPosts(pageNo, categoryNo, parentCategoryNo);
 
 		Document doc = this.getDocument(requestURL);
 		Elements pagingElement = this.getPaging(doc);
@@ -66,6 +66,19 @@ public class CrawlServiceImpl implements CrawlService{
 				.collect(Collectors.toList());
 
 		return paging;
+	}
+
+	private String getURLForPosts(String pageNo, String categoryNo, String parentCategoryNo) {
+		StringBuffer buffer = new StringBuffer(URL_FOR_POSTS);
+		buffer.append("currentPage=").append(pageNo)
+						.append("&")
+						.append("categoryNo=").append(categoryNo);
+
+		if(! StringUtils.isEmpty(parentCategoryNo)) {
+			buffer.append("&").append("parentCategoryNo=").append(parentCategoryNo);
+		}
+
+		return buffer.toString();
 	}
 
 	public Post getPostBy(String no) {
