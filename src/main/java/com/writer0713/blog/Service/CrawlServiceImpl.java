@@ -8,6 +8,7 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
 
@@ -20,20 +21,22 @@ import java.util.stream.Stream;
 @Service
 public class CrawlServiceImpl implements CrawlService{
 
-	private static final String URL_FOR_POSTS = "https://blog.naver.com/PostList.nhn?from=postList&blogId=writer0713&"; // categoryNo=0&currentPage=
-	private static final String URL_FOR_ONE_POST = "https://blog.naver.com/PostView.nhn?blogId=writer0713&logNo=";
+	@Value("${blog.url.posts}")
+	private String URL_FOR_POSTS;
+	@Value("${blog.url.post}")
+	private String URL_FOR_ONE_POST;
 
 	public List<Post> getPostsBy(String pageNo, String categoryNo, String parentCategoryNo) {
 
 		String requestURL = getURLForPosts(pageNo, categoryNo, parentCategoryNo);
 
 		Document doc = this.getDocument(requestURL);
-		Elements postElements = this.getPosts(doc);
+		Elements postElements = this.getPostElements(doc);
 
 		List<Post> posts = postElements.stream().map(element -> {
-			String title = element.select("div.se-title-text span.se-fs-, div.se_title, span.itemSubjectBoldfont").text();
-			String date = element.select("span.se_publishDate, p.date").text();
-			String content = element.select("div.se-main-container, div.__se_component_area, div#postViewArea").text();
+			String title = getTitleFrom(element);
+			String date = getDateFrom(element);
+			String content = getContentFrom(element).text();
 			int length = content.length();
 			int ends = (length < 200) ? length : 200;
 			String summary = content.substring(0, ends).concat("...");
@@ -53,7 +56,7 @@ public class CrawlServiceImpl implements CrawlService{
 		String requestURL = getURLForPosts(pageNo, categoryNo, parentCategoryNo);
 
 		Document doc = this.getDocument(requestURL);
-		Elements pagingElement = this.getPaging(doc);
+		Elements pagingElement = this.getPagingElements(doc);
 
 		List<String> paging = pagingElement.select("div.blog2_paginate a, strong")
 				.stream()
@@ -88,16 +91,14 @@ public class CrawlServiceImpl implements CrawlService{
 		Document doc = getDocument(requestURL);
 		doc.outputSettings().prettyPrint(false);
 
-		Element postElement = doc.select("div#post_1").first();
+		Element postElement = getPostElement(doc);
 
-		String title = postElement.select("div.se-title-text, div.se_title, span.itemSubjectBoldfont").text();
-		String date = postElement.select("span.se_publishDate, p.date").text();
-		String content = postElement.select("div.se-main-container, div.__se_component_area, div#postViewArea").html();
+		String title = getTitleFrom(postElement);
+		String date = getDateFrom(postElement);
+		String content = getContentFrom(postElement).html();
 
 		content = processMediaTag(content);
-
 		content = processImageTag(content);
-
 		content = processYoutubeTag(content);
 
 		content = filterEmptyPTags(content);
@@ -108,8 +109,47 @@ public class CrawlServiceImpl implements CrawlService{
 		return post;
 	}
 
+	public Elements getPostElements(Document doc) {
+		return doc.select("div#postListBody > div:has(div.post-back)");
+	}
+
+	public Elements getPagingElements(Document doc) {
+		return doc.select("div.paging");
+	}
+
+	public Element getPostElement(Document doc) {
+		return doc.select("div#post_1").first();
+	}
+
+	public String getTitleFrom(Element postElement) {
+		return postElement.select("div.se-title-text span.se-fs-, div.se_title, span.itemSubjectBoldfont").text();
+	}
+
+	public String getDateFrom(Element postElement) {
+		return postElement.select("span.se_publishDate, p.date").text();
+	}
+
+	public Elements getContentFrom(Element postElement) {
+		return postElement.select("div.se-main-container, div.__se_component_area, div#postViewArea");
+	}
+
+	public Document getDocument(String requestURL) {
+		try {
+			return Jsoup.connect(requestURL)
+					.userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
+					.get();
+
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+
+		return null;
+	}
+
 	private String processImageTag(String content) {
-		return content.replaceAll("postfiles.", "mblogthumb-phinf.");
+		return content
+				.replaceAll("postfiles.", "mblogthumb-phinf.")
+				.replaceAll("type=w80_blur", "type=w966");
 	}
 
 	private String processMediaTag(String content) {
@@ -187,22 +227,10 @@ public class CrawlServiceImpl implements CrawlService{
 		return doc.html();
 	}
 
-	private String getURLFrom(Element element) {
+	public String getURLFrom(Element element) {
 		String url = element.select("a.url").attr("title");
 		if (StringUtils.isEmpty(url)) url = element.select("a.fil5").text();
 		return url;
-	}
-
-	private Document getDocument(String requestURL) {
-		try {
-			return Jsoup.connect(requestURL)
-							.userAgent("Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/51.0.2704.103 Safari/537.36")
-							.get();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-
-		return null;
 	}
 
 	private String makeOGTagElement(OgTag tag) {
@@ -240,13 +268,5 @@ public class CrawlServiceImpl implements CrawlService{
 				.append("</iframe>");
 
 		return buffer.toString();
-	}
-
-	private Elements getPosts(Document doc) {
-		return doc.select("div#postListBody > div:has(div.post-back)");
-	}
-
-	private Elements getPaging(Document doc) {
-		return doc.select("div.paging");
 	}
 }
