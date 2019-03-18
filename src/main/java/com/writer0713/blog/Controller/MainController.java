@@ -8,6 +8,7 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
@@ -23,10 +24,10 @@ public class MainController {
 
 	@GetMapping("/")
 	public String index(Model model,
-											HttpServletRequest request,
-											@RequestParam(value = "page", defaultValue = "1") String page,
-											@RequestParam(value = "categoryNo", defaultValue = "0") String categoryNo,
-											@RequestParam(value = "parentCategoryNo", required = false) String parentCategoryNo) {
+						@RequestParam(value = "page", defaultValue = "1") String page,
+						@RequestParam(value = "categoryNo", defaultValue = "0") String categoryNo,
+						@RequestParam(value = "parentCategoryNo", required = false) String parentCategoryNo)
+	{
 
 		List<Post> posts = crawlService.getPostsBy(page, categoryNo, parentCategoryNo);
 		List<String> paging = crawlService.getPaging(page, categoryNo, parentCategoryNo);
@@ -55,6 +56,29 @@ public class MainController {
 	@GetMapping("/about")
 	public String about() {
 		return "about";
+	}
+
+	@GetMapping("/search")
+	public String search(Model model,
+	                     @RequestParam(value = "page", defaultValue = "1") String page,
+	                     @RequestParam(value = "keyword") String keyword) {
+
+		final String categoryNo = "0";
+
+		List<Post> posts = crawlService.searchPostsBy(page, keyword);
+		List<String> paging = crawlService.getPagingForSearch(page, keyword);
+
+		String params = getParams(categoryNo, null);
+
+		model.addAttribute("posts", posts);
+		model.addAttribute("currentPageNo", page);
+		model.addAttribute("paging", paging);
+		model.addAttribute("params", params);
+		model.addAttribute("keyword", keyword);
+		model.addAttribute("categoryNo", categoryNo);
+		model.addAttribute("isSearch", true);
+
+		return "index";
 	}
 
 

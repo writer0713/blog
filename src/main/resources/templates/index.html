@@ -25,7 +25,13 @@
 		<section>
 			<div class="row">
 				<div class="col-md-6 col-md-offset-2">
-					<nav th:replace="fragments/pagination :: paging( ${paging}, ${currentPageNo} )"></nav>
+					<th:block th:if="${isSearch}">
+						<nav th:replace="fragments/pagination-search :: pagingSearch( ${paging}, ${currentPageNo}, ${keyword} )"></nav>
+					</th:block>
+					<th:block th:unless="${isSearch}">
+						<nav th:replace="fragments/pagination :: paging( ${paging}, ${currentPageNo} )"></nav>
+					</th:block>
+
 				</div>
 			</div>
 		</section>

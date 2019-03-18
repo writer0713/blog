@@ -25,6 +25,8 @@ public class CrawlServiceImpl implements CrawlService{
 	private String URL_FOR_POSTS;
 	@Value("${blog.url.post}")
 	private String URL_FOR_ONE_POST;
+	@Value("${blog.url.search}")
+	private String URL_FOR_SEARCH;
 
 	public List<Post> getPostsBy(String pageNo, String categoryNo, String parentCategoryNo) {
 
@@ -42,6 +44,32 @@ public class CrawlServiceImpl implements CrawlService{
 			String summary = content.substring(0, ends).concat("...");
 			String url = getURLFrom(element);
 			String postNo = Stream.of(url.split("/")).reduce((first, last) -> last).get(); // get last element after split
+
+			Post post = new Post(title, date, summary, postNo);
+
+			return post;
+		}).collect(Collectors.toList());
+
+		return posts;
+	}
+
+	@Override
+	public List<Post> searchPostsBy(String pageNo, String keyword) {
+
+		String requestURL = getURLForSearch(pageNo, keyword);
+
+		System.out.println("requestURL : " + requestURL);
+
+		Document doc = this.getDocument(requestURL);
+		Elements postElements = getPostElements(doc);
+
+		List<Post> posts = postElements.stream().map(element -> {
+
+			String title = getTitleFrom(element);
+			String date = getDateFrom(element);
+			String summary = getContentFrom(element).text();
+			String url = getURLFrom(element);
+			String postNo = url.replaceAll("http.+&logNo=(\\d+)&.*", "$1"); // get last element after split
 
 			Post post = new Post(title, date, summary, postNo);
 
@@ -71,6 +99,22 @@ public class CrawlServiceImpl implements CrawlService{
 		return paging;
 	}
 
+	@Override
+	public List<String> getPagingForSearch(String pageNo, String keyword) {
+		String requestURL = getURLForSearch(pageNo, keyword);
+
+		Document doc = this.getDocument(requestURL);
+		Elements pagingElement = this.getPagingElements(doc);
+
+		List<String> paging = pagingElement.select("table.Nnavi a, strong")
+				.stream()
+				.map(elem -> elem.attr("href").replaceAll("javascript:goPage\\((\\d+)\\).*", "$1"))
+				.collect(Collectors.toList());
+
+		return paging;
+	}
+
+
 	private String getURLForPosts(String pageNo, String categoryNo, String parentCategoryNo) {
 		StringBuffer buffer = new StringBuffer(URL_FOR_POSTS);
 		buffer.append("currentPage=").append(pageNo)
@@ -80,6 +124,15 @@ public class CrawlServiceImpl implements CrawlService{
 		if(! StringUtils.isEmpty(parentCategoryNo)) {
 			buffer.append("&").append("parentCategoryNo=").append(parentCategoryNo);
 		}
+
+		return buffer.toString();
+	}
+
+	private String getURLForSearch(String pageNo, String keyword) {
+		StringBuffer buffer = new StringBuffer(URL_FOR_SEARCH);
+		buffer.append("cpage=").append(pageNo)
+				.append("&")
+				.append("searchText=").append(keyword);
 
 		return buffer.toString();
 	}
@@ -110,7 +163,7 @@ public class CrawlServiceImpl implements CrawlService{
 	}
 
 	public Elements getPostElements(Document doc) {
-		return doc.select("div#postListBody > div:has(div.post-back)");
+		return doc.select("div#postListBody > div:has(div.post-back), div#post-area > table tr[valign] > td > table > tbody > tr:has(table)");
 	}
 
 	public Elements getPagingElements(Document doc) {
@@ -122,15 +175,15 @@ public class CrawlServiceImpl implements CrawlService{
 	}
 
 	public String getTitleFrom(Element postElement) {
-		return postElement.select("div.se-title-text span.se-fs-, div.se_title, span.itemSubjectBoldfont").text();
+		return postElement.select("div.se-title-text span.se-fs-, div.se_title, span.itemSubjectBoldfont, a.s_link").text();
 	}
 
 	public String getDateFrom(Element postElement) {
-		return postElement.select("span.se_publishDate, p.date").text();
+		return postElement.select("span.se_publishDate, p.date, td.eng").text();
 	}
 
 	public Elements getContentFrom(Element postElement) {
-		return postElement.select("div.se-main-container, div.__se_component_area, div#postViewArea");
+		return postElement.select("div.se-main-container, div.__se_component_area, div#postViewArea, tbody > tr:eq(1) td");
 	}
 
 	public Document getDocument(String requestURL) {
@@ -230,6 +283,7 @@ public class CrawlServiceImpl implements CrawlService{
 	public String getURLFrom(Element element) {
 		String url = element.select("a.url").attr("title");
 		if (StringUtils.isEmpty(url)) url = element.select("a.fil5").text();
+		if (StringUtils.isEmpty(url)) url = element.select("a.s_link").attr("href");
 		return url;
 	}
 
