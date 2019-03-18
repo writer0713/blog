@@ -13,6 +13,10 @@ public interface CrawlService {
 
 	List<String> getPaging(String pageNo, String categoryNo, String parentCategoryNo);
 
+	List<String> getPagingForSearch(String pageNo, String keyword);
+
+	List<Post> searchPostsBy(String pageNo, String keyword);
+
 	Post getPostBy(String no);
 
 	Elements getPostElements(Document doc);

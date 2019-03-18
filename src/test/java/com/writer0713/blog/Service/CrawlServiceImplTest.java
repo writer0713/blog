@@ -1,6 +1,7 @@
 package com.writer0713.blog.Service;
 
 import com.writer0713.blog.Model.Post;
+import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -34,6 +35,9 @@ public class CrawlServiceImplTest {
 
 	@Value("${blog.url.posts}")
 	private String PREFIX_URL_FOR_POSTS;
+
+	@Value("${blog.url.search}")
+	private String PREFIX_URL_FOR_SEARCH;
 
 	private String URL_FOR_POST;
 	private String URL_FOR_POSTS;
@@ -131,5 +135,12 @@ public class CrawlServiceImplTest {
 			String url = service.getURLFrom(element);
 			assertNotNull(url);
 		});
+	}
+
+	@Test
+	public void searchPostsBy() {
+		List<Post> posts = service.searchPostsBy("1", "자바");
+
+		assertFalse(posts.isEmpty());
 	}
 }
