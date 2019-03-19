@@ -175,7 +175,8 @@ public class CrawlServiceImpl implements CrawlService{
 	}
 
 	public String getTitleFrom(Element postElement) {
-		return postElement.select("div.se-title-text span.se-fs-, div.se_title, span.itemSubjectBoldfont, a.s_link").text();
+		// div.se-title-text span.se-fs-
+		return postElement.select("div.se-title-text p.se-text-paragraph, div.se_title, span.itemSubjectBoldfont, a.s_link").text();
 	}
 
 	public String getDateFrom(Element postElement) {
