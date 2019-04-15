@@ -46,24 +46,24 @@ def jsDir = "${projectDir}/src/main/resources/static/js/"
 def jsFiles = ["jquery.min.js", "bootstrap.js", "codemirror.min.js", "clike.min.js", "custom.js"]
 
 def cssDir = "${projectDir}/src/main/resources/static/css/"
-def cssFiles = ["404.css", "bootstrap.css", "bootstrap-theme.css", "codemirror.min.css", "material.min.css", "style.css"]
+def cssFiles = ["404.css", "bootstrap.css", "bootstrap-theme.css", "font-awesome.min.css", "codemirror.min.css", "material.min.css", "style.css"]
 
 
 combineJs {
     encoding = "UTF-8"
     source = jsFiles.collect { elem -> return jsDir + elem }
-    dest = file("${jsDir}/prod/all.js")
+    dest = file("${jsDir}/all.js")
 }
 
 combineCss {
     source = cssFiles.collect { elem -> return cssDir + elem }
-    dest = file("${cssDir}/prod/all.css")
+    dest = file("${cssDir}/all.css")
 }
 
 minifyJs {
     source = combineJs
-    dest = file("${jsDir}/prod/all-min.js")
-    sourceMap = file("${jsDir}/prod/all.sourcemap.json")
+    dest = file("${jsDir}/all-min.js")
+    sourceMap = file("${jsDir}/all.sourcemap.json")
     closure {
         warningLevel = 'QUIET'
         compilerOptions.languageIn="ECMASCRIPT6"
@@ -73,10 +73,11 @@ minifyJs {
 
 minifyCss {
     source = combineCss
-    dest = "${cssDir}/prod/all-min.css"
+    dest = "${cssDir}/all-min.css"
     yuicompressor { // Optional
         lineBreakPos = -1
     }
 }
 
+compileJava.dependsOn(clean)
 assemble.dependsOn(minifyJs, minifyCss)

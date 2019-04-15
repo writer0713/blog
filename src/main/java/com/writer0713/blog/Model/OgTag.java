@@ -40,7 +40,7 @@ public class OgTag {
 			e.printStackTrace();
 		}
 
-		if (StringUtils.isEmpty(decoded)) decoded = "";
+		if (StringUtils.isEmpty(decoded)) decoded = "https://picsum.photos/100/100/?random";
 
 		return decoded;
 	}

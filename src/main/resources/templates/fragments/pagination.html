@@ -1,5 +1,5 @@
 <nav aria-label="Page navigation example" th:fragment="paging(paging, currentPageNo)" xmlns:th="http://www.thymeleaf.org">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination pagination-sm justify-content-center">
 
         <li class="page-item" th:each="pageNo, iter : ${paging}" th:classappend="${pageNo == currentPageNo} ? 'page-item active' : 'page-item'">
 
@@ -8,7 +8,7 @@
                 <!-- 이전페이지 / 다음페이지 표시 -->
                 <th:block th:if="${iter.size > 10}">
                     <a class="page-link" th:if="${iter.first && pageNo != '1'}" th:href="@{|/?${params}&page=${pageNo}|}" th:text="${'<'}">이전페이지</a>
-                    <a class="page-link" th:if="${!iter.last}" th:href="@{|/?${params}&page=${pageNo}|}" th:text="${pageNo}"></a>
+                    <a class="page-link" th:if="${!iter.first && !iter.last}" th:href="@{|/?${params}&page=${pageNo}|}" th:text="${pageNo}"></a>
                     <a class="page-link" th:if="${iter.last}" th:href="@{|/?${params}&page=${pageNo}|}" th:text="${'>'}">다음페이지</a>
                 </th:block>
 
