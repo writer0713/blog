@@ -79,4 +79,5 @@ minifyCss {
     }
 }
 
-assemble.dependsOn(clean, minifyJs, minifyCss)
+compileJava.dependsOn(clean)
+assemble.dependsOn(minifyJs, minifyCss)
