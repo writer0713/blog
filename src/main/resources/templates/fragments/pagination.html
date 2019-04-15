@@ -1,5 +1,5 @@
 <nav aria-label="Page navigation example" th:fragment="paging(paging, currentPageNo)" xmlns:th="http://www.thymeleaf.org">
-    <ul class="pagination justify-content-center">
+    <ul class="pagination pagination-sm justify-content-center">
 
         <li class="page-item" th:each="pageNo, iter : ${paging}" th:classappend="${pageNo == currentPageNo} ? 'page-item active' : 'page-item'">
 
