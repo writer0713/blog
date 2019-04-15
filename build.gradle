@@ -84,4 +84,4 @@ clean.doLast {
     file("${cssDir}/all-min.js").delete()
 }
 
-assemble.dependsOn(minifyJs, minifyCss)
+assemble.dependsOn(clean, minifyJs, minifyCss)
