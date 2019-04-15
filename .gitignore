@@ -143,8 +143,3 @@ hs_err_pid*
 target/
 
 # End of https://www.gitignore.io/api/java,java-web,intellij+all
-
-all.css
-all-min.css
-all.js
-all-min.js
