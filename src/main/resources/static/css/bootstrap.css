@@ -6798,3 +6798,9 @@ button.close {
   }
 }
 /*# sourceMappingURL=bootstrap.css.map */
+
+@media (max-width: 991px) {
+  .sidebar-gutter {
+    display: none;
+  }
+}
