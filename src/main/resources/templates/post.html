@@ -1,6 +1,6 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-	<head th:replace="fragments/head :: head"></head>
+	<head th:replace="fragments/head :: head ( ${profile} )"></head>
 	<body>
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/nav :: nav (${1})"></nav>
@@ -40,7 +40,7 @@
 
 		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
 
-		<th:block th:replace="fragments/script :: js"></th:block>
+		<th:block th:replace="fragments/script :: js ( ${profile} )"></th:block>
 
 	</body>
 </html>

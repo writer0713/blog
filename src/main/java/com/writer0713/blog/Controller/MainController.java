@@ -3,24 +3,34 @@ package com.writer0713.blog.Controller;
 import com.writer0713.blog.Model.Post;
 import com.writer0713.blog.Service.CrawlService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
+import org.springframework.beans.factory.annotation.Value;
+import org.springframework.context.annotation.Profile;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
-import javax.servlet.http.HttpServletRequest;
+import javax.annotation.PostConstruct;
 import java.util.List;
 
 @RequestMapping("/")
 @Controller
 public class MainController {
 
+	@Value("${profile}")
+	private String profile;
+
 	@Autowired
 	public CrawlService crawlService;
+
+	@PostConstruct
+	@Profile("local")
+	public void init() {
+		System.out.println("### profile : " + profile);
+	}
 
 	@GetMapping("/")
 	public String index(Model model,
@@ -88,6 +98,11 @@ public class MainController {
 		if (parentCategoryNo != null) buffer.append("&").append("parentCategoryNo=").append(parentCategoryNo);
 
 		return buffer.toString();
+	}
+
+	@ModelAttribute
+	public void getCurrentProfile(Model model) {
+		model.addAttribute("profile", profile);
 	}
 
 }
