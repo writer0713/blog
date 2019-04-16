@@ -1,33 +1,15 @@
-<th:block th:fragment="js" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="js( profile )" xmlns:th="http://www.thymeleaf.org">
     <!-- Bootstrap core JavaScript
 			================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.3/jquery.min.js"></script>
-    <script src="/js/bootstrap.min.js"></script>
-    <script src="/js/jquery.bxslider.js"></script>
-    <script src="/js/mooz.scripts.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/codemirror.min.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/codemirror/5.44.0/mode/clike/clike.min.js"></script>
-    <script>
-        $('.__se_code_view').each(function() {
-
-            const $this = $(this);
-            const $code = $this.text();
-
-            $this.empty();
-
-            const myCodeMirror = CodeMirror(this, {
-                value: $code,
-                mode: 'text/x-java',
-                theme: 'material',
-                lineNumbers: true,
-                lineWrapping: true,
-                scrollbarStyle: null,
-                enableCodeFormatting: true,
-                readOnly: true,
-                viewportMargin: Infinity
-            });
-
-        });
-    </script>
+    <th:block th:if="${profile == 'prod'}">
+        <script src="/js/all-min.js"></script>
+    </th:block>
+    <th:block th:unless="${profile == 'prod'}">
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/codemirror.min.js"></script>
+        <script src="/js/clike.min.js"></script>
+        <script src="/js/custom.js"></script>
+    </th:block>
 </th:block>

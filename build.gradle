@@ -10,9 +10,17 @@ buildscript {
     }
 }
 
+plugins {
+    id "com.eriwen.gradle.js" version "2.14.1"
+    id "com.eriwen.gradle.css" version "2.14.0"
+}
+
 apply plugin: 'java'
 apply plugin: 'org.springframework.boot'
 apply plugin: 'io.spring.dependency-management'
+apply plugin: 'js'
+apply plugin: 'css'
+
 
 group = 'com.writer0713'
 version = '0.0.1-SNAPSHOT'
@@ -33,3 +41,54 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
+allprojects {
+    ext.profile = (!System.getenv('profile') || !project.hasProperty('profile') || !profile) ? 'prod' : 'local'
+
+    sourceSets {
+        main {
+            resources {
+                srcDirs "src/main/resources", "src/main/resources-${profile}"
+            }
+        }
+    }
+}
+
+def jsDir = "${projectDir}/src/main/resources/static/js/"
+def jsFiles = ["jquery.min.js", "bootstrap.js", "codemirror.min.js", "clike.min.js", "custom.js"]
+
+def cssDir = "${projectDir}/src/main/resources/static/css/"
+def cssFiles = ["404.css", "bootstrap.css", "bootstrap-theme.css", "font-awesome.min.css", "codemirror.min.css", "material.min.css", "style.css"]
+
+
+combineJs {
+    encoding = "UTF-8"
+    source = jsFiles.collect { elem -> return jsDir + elem }
+    dest = file("${jsDir}/all.js")
+}
+
+combineCss {
+    source = cssFiles.collect { elem -> return cssDir + elem }
+    dest = file("${cssDir}/all.css")
+}
+
+minifyJs {
+    source = combineJs
+    dest = file("${jsDir}/all-min.js")
+    sourceMap = file("${jsDir}/all.sourcemap.json")
+    closure {
+        warningLevel = 'QUIET'
+        compilerOptions.languageIn="ECMASCRIPT6"
+        compilerOptions.languageOut="ECMASCRIPT5"
+    }
+}
+
+minifyCss {
+    source = combineCss
+    dest = "${cssDir}/all-min.css"
+    yuicompressor { // Optional
+        lineBreakPos = -1
+    }
+}
+
+compileJava.dependsOn(clean)
+assemble.dependsOn(minifyJs, minifyCss)

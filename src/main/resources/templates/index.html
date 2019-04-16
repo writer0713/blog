@@ -1,19 +1,12 @@
 <!DOCTYPE html>
 <html lang="en" xmlns:th="http://www.w3.org/1999/xhtml">
-	<head th:replace="fragments/head :: head"></head>
+	<head th:replace="fragments/head :: head( ${profile} )"></head>
 	<body>
 		<!-- Navigation -->
 		<nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/nav :: nav (${1})"></nav>
 
 		<div class="container">
 		<header th:replace="fragments/logo :: logo"></header>
-		<section class="main-slider" style="display: none">
-			<ul class="bxslider">
-				<li><div class="slider-item"><img src="/images/1140x500-2.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
-				<li><div class="slider-item"><img src="/images/1140x500-1.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
-				<li><div class="slider-item"><img src="/images/1140x500-3.jpg" title="Funky roots" /><h2><a href="/post" title="Vintage-Inspired Finds for Your Home">Vintage-Inspired Finds for Your Home</a></h2></div></li>
-			</ul>
-		</section>
 		<section>
 			<div class="row">
 				<div class="col-md-8">
@@ -24,7 +17,7 @@
 		</section>
 		<section>
 			<div class="row">
-				<div class="col-md-6 col-md-offset-2">
+				<div class="col-sm-10 col-sm-offset-1 col-md-6 col-md-offset-2 text-center">
 					<th:block th:if="${isSearch}">
 						<nav th:replace="fragments/pagination-search :: pagingSearch( ${paging}, ${currentPageNo}, ${keyword} )"></nav>
 					</th:block>
@@ -39,6 +32,6 @@
 
 		<footer class="footer" th:replace="fragments/footer :: footer"></footer>
 
-		<th:block th:replace="fragments/script :: js"></th:block>
+		<th:block th:replace="fragments/script :: js ( ${profile} )"></th:block>
 	</body>
 </html>
