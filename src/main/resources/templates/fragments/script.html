@@ -1,11 +1,15 @@
-<th:block th:fragment="js" xmlns:th="http://www.thymeleaf.org">
+<th:block th:fragment="js( profile )" xmlns:th="http://www.thymeleaf.org">
     <!-- Bootstrap core JavaScript
 			================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
-    <script src="/js/all-min.js"></script>
-    <!--<script src="/js/jquery.min.js"></script>-->
-    <!--<script src="/js/bootstrap.min.js"></script>-->
-    <!--<script src="/js/codemirror.min.js"></script>-->
-    <!--<script src="/js/clike.min.js"></script>-->
-    <!--<script src="/js/custom.js"></script>-->
+    <th:block th:if="${profile == 'prod'}">
+        <script src="/js/all-min.js"></script>
+    </th:block>
+    <th:block th:unless="${profile == 'prod'}">
+        <script src="/js/jquery.min.js"></script>
+        <script src="/js/bootstrap.min.js"></script>
+        <script src="/js/codemirror.min.js"></script>
+        <script src="/js/clike.min.js"></script>
+        <script src="/js/custom.js"></script>
+    </th:block>
 </th:block>

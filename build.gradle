@@ -41,6 +41,17 @@ dependencies {
     testImplementation 'org.springframework.boot:spring-boot-starter-test'
     testImplementation 'org.springframework.security:spring-security-test'
 }
+allprojects {
+    ext.profile = (!System.getenv('profile') || !project.hasProperty('profile') || !profile) ? 'prod' : 'local'
+
+    sourceSets {
+        main {
+            resources {
+                srcDirs "src/main/resources", "src/main/resources-${profile}"
+            }
+        }
+    }
+}
 
 def jsDir = "${projectDir}/src/main/resources/static/js/"
 def jsFiles = ["jquery.min.js", "bootstrap.js", "codemirror.min.js", "clike.min.js", "custom.js"]
