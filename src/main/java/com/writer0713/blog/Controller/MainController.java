@@ -2,6 +2,7 @@ package com.writer0713.blog.Controller;
 
 import com.writer0713.blog.Model.Post;
 import com.writer0713.blog.Service.CrawlService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Profile;
@@ -16,6 +17,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import javax.annotation.PostConstruct;
 import java.util.List;
 
+@Slf4j
 @RequestMapping("/")
 @Controller
 public class MainController {
@@ -29,7 +31,7 @@ public class MainController {
 	@PostConstruct
 	@Profile("local")
 	public void init() {
-		System.out.println("### profile : " + profile);
+		log.debug("profile : {}", profile);
 	}
 
 	@GetMapping("/")
