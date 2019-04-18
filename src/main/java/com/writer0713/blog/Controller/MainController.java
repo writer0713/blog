@@ -79,7 +79,16 @@ public class MainController {
 	}
 
 	@GetMapping("/about")
-	public String about() {
+	public String about(Model model) {
+
+		String title = "KJH Dev Story";
+		String desc = "프로그래밍을 사랑하는, 프로그래밍을 즐기는 사람입니다.";
+		String url = "https://writer0713.herokuapp.com/about";
+
+		Map<String, String> meta = makeMetaInfos(title, desc, url);
+
+		model.addAttribute("meta", meta);
+
 		return "about";
 	}
 
