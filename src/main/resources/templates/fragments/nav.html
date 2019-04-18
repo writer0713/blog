@@ -10,7 +10,8 @@
         </div>
         <div id="navbar" class="collapse navbar-collapse dropdown">
             <ul class="nav navbar-nav">
-                <li th:classappend="${active} == 1 ? 'active dropdown' : 'dropdown'">
+                <li th:classappend="${active} == 1 ? active"><a href="/">Home</a></li>
+                <li class="dropdown">
                     <a href="#" data-toggle="dropdown" class="dropdown-toggle">Categories <b class="caret"></b></a>
                     <ul class="dropdown-menu">
                         <li><a href="/"><i th:if="${categoryNo == '0'}" class="fa fa-arrow-circle-right" aria-hidden="true"></i>   전체보기</a></li>
