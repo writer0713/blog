@@ -6,12 +6,12 @@
         <div class="blog-post-body" >
             <h2><a href="#" th:href="${post.url}" th:text="${post.title}">Vintage-Inspired Finds for Your Home</a></h2>
             <div class="post-meta"><span>by <a href="javascript:void(0)" th:text="${post.author}">Author</a></span>/<span th:inline="text"><i class="fa fa-clock-o"></i>[[${post.date}]]</span></div>
-            <div class="post-content" th:text="${post.content}">
+            <a class="post-content" th:text="${post.content}" th:href="${post.url}">
                 <p>ew months ago, we found ridiculously cheap plane tickets for Boston and off we went. It was our first visit
-                    to the city and, believe it or not, Stockholm in February was more pleasant than Boston in March. It
-                    probably has a lot to do with the fact that we arrived completely unprepared. That I, in my converse and
-                    thin jacket, did not end up with pneumonia is honestly not even fair.</p>
-            </div>
+                to the city and, believe it or not, Stockholm in February was more pleasant than Boston in March. It
+                probably has a lot to do with the fact that we arrived completely unprepared. That I, in my converse and
+                thin jacket, did not end up with pneumonia is honestly not even fair.</p>
+            </a>
 
             <div class="read-more"><a href="#" th:href="${post.url}">Continue Reading</a></div>
         </div>
