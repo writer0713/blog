@@ -10,6 +10,7 @@ public class Post {
 	private String date;
 	private String content;
 	private String url;
+	private String description;
 
 	public Post(String title, String date, String content) {
 		this.title = title;

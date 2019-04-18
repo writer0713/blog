@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 
 import javax.annotation.PostConstruct;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 @Slf4j
 @RequestMapping("/")
@@ -46,11 +48,19 @@ public class MainController {
 
 		String params = getParams(categoryNo, parentCategoryNo);
 
+		String title = "KJH Dev Story";
+		String desc = "프로그래밍을 사랑하는, 프로그래밍을 즐기는 사람입니다.";
+		String url = "https://writer0713.herokuapp.com";
+
+		Map<String, String> meta = makeMetaInfos(title, desc, url);
+		model.addAttribute("meta", meta);
+
 		model.addAttribute("posts", posts);
 		model.addAttribute("currentPageNo", page);
 		model.addAttribute("paging", paging);
 		model.addAttribute("params", params);
 		model.addAttribute("categoryNo", categoryNo);
+
 
 		return "index";
 	}
@@ -60,13 +70,25 @@ public class MainController {
 
 		Post post = crawlService.getPostBy(no);
 
+		Map<String, String> meta = makeMetaInfos(post.getTitle(), post.getDescription(), post.getUrl());
+
+		model.addAttribute("meta", meta);
 		model.addAttribute("post", post);
 
 		return "post";
 	}
 
 	@GetMapping("/about")
-	public String about() {
+	public String about(Model model) {
+
+		String title = "KJH Dev Story";
+		String desc = "프로그래밍을 사랑하는, 프로그래밍을 즐기는 사람입니다.";
+		String url = "https://writer0713.herokuapp.com/about";
+
+		Map<String, String> meta = makeMetaInfos(title, desc, url);
+
+		model.addAttribute("meta", meta);
+
 		return "about";
 	}
 
@@ -105,6 +127,20 @@ public class MainController {
 	@ModelAttribute
 	public void getCurrentProfile(Model model) {
 		model.addAttribute("profile", profile);
+	}
+
+	private Map<String, String> makeMetaInfos(String title, String description, String url) {
+
+		String image = "https://avatars3.githubusercontent.com/u/5811400?s=460&v=4";
+
+		Map<String, String> metaInfos = new HashMap<>();
+		metaInfos.put("image", image);
+
+		metaInfos.put("title", title);
+		metaInfos.put("description", description);
+		metaInfos.put("url", url);
+
+		return metaInfos;
 	}
 
 }
