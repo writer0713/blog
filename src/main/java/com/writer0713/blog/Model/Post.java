@@ -2,6 +2,8 @@ package com.writer0713.blog.Model;
 
 import lombok.Data;
 
+import java.util.List;
+
 @Data
 public class Post {
 
@@ -11,6 +13,7 @@ public class Post {
 	private String content;
 	private String url;
 	private String description;
+	private List<String> tags;
 
 	public Post(String title, String date, String content) {
 		this.title = title;
