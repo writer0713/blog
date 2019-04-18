@@ -8,11 +8,16 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 import org.springframework.util.StringUtils;
+import org.springframework.web.client.RestTemplate;
 
 import java.io.IOException;
+import java.net.URLDecoder;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
@@ -27,6 +32,15 @@ public class CrawlServiceImpl implements CrawlService{
 	private String URL_FOR_ONE_POST;
 	@Value("${blog.url.search}")
 	private String URL_FOR_SEARCH;
+	@Value("${blog.url.tags}")
+	private String URL_FOR_TAGS;
+
+	private final RestTemplate template;
+
+	@Autowired
+	public CrawlServiceImpl(RestTemplate template) {
+		this.template = template;
+	}
 
 	public List<Post> getPostsBy(String pageNo, String categoryNo, String parentCategoryNo) {
 
@@ -57,8 +71,6 @@ public class CrawlServiceImpl implements CrawlService{
 	public List<Post> searchPostsBy(String pageNo, String keyword) {
 
 		String requestURL = getURLForSearch(pageNo, keyword);
-
-		System.out.println("requestURL : " + requestURL);
 
 		Document doc = this.getDocument(requestURL);
 		Elements postElements = getPostElements(doc);
@@ -162,6 +174,9 @@ public class CrawlServiceImpl implements CrawlService{
 		String description = getDescription(doc);
 		post.setDescription(description);
 
+		List<String> tags = getTags(no);
+		post.setTags(tags);
+
 		return post;
 	}
 
@@ -192,6 +207,29 @@ public class CrawlServiceImpl implements CrawlService{
 
 	public Elements getContentFrom(Element postElement) {
 		return postElement.select("div.se-main-container, div.__se_component_area, div#postViewArea, tbody > tr:eq(1) td");
+	}
+
+	public List<String> getTags(String no) {
+		String response = template.getForObject(URL_FOR_TAGS.concat(no), String.class);
+
+		ObjectMapper mapper = new ObjectMapper();
+		List<String> tags = null;
+		try {
+			JsonNode node = mapper.readTree(response);
+			JsonNode tagElems = node.get("taglist");
+
+			if (tagElems == null) throw new Exception("no tag elements found");
+
+			String tagStr = node.get("taglist").get(0).get("tagName").toString();
+			String decodedTagStr = URLDecoder.decode(tagStr, "UTF-8").replaceAll("\"", "");
+
+			tags = Arrays.asList(decodedTagStr.split(","));
+		} catch (Exception e) {
+			e.printStackTrace();
+			return new ArrayList<>();
+		}
+
+		return tags;
 	}
 
 	public Document getDocument(String requestURL) {

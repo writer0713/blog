@@ -29,6 +29,12 @@
 									<p>“We have adopted approaches from the field of algebraic topology that previously had been used primarily in the domain of pure mathematics and have applied them to experimental data on the activity of place cells — specialized neurons in the part of the brain called the hippocampus that sense the position of an animal in its environment,” said Curto.</p>
 								</div>
 							</div>
+							<br/><br/>
+							<div>
+								<th:block th:each="tag, iter : ${post.tags}">
+									<span class="label label-danger" th:text="${tag}" style="font-size: 14px; display: inline-block; margin: 5px 7px;">Warning</span>
+								</th:block>
+							</div>
 						</article>
 					</div>
 					<!--<div class="col-md-4 sidebar-gutter" th:replace="fragments/sidebar :: aside"></div>-->
