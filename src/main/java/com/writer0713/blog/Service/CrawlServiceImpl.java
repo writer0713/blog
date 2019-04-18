@@ -159,6 +159,9 @@ public class CrawlServiceImpl implements CrawlService{
 
 		Post post = new Post(title, date, content);
 
+		String description = getDescription(doc);
+		post.setDescription(description);
+
 		return post;
 	}
 
@@ -172,6 +175,10 @@ public class CrawlServiceImpl implements CrawlService{
 
 	public Element getPostElement(Document doc) {
 		return doc.select("div#post_1").first();
+	}
+
+	public String getDescription(Document doc) {
+		return doc.select("meta[property=og:description]").first().attr("content");
 	}
 
 	public String getTitleFrom(Element postElement) {
