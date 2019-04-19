@@ -3,13 +3,13 @@
 			================================================== -->
     <!-- Placed at the end of the document so the pages load faster -->
     <th:block th:if="${profile == 'prod'}">
-        <script src="/js/all-min.js"></script>
+        <script async src="/js/all-min.js"></script>
     </th:block>
     <th:block th:unless="${profile == 'prod'}">
-        <script src="/js/jquery.min.js"></script>
-        <script src="/js/bootstrap.min.js"></script>
-        <script src="/js/codemirror.min.js"></script>
-        <script src="/js/clike.min.js"></script>
-        <script src="/js/custom.js"></script>
+        <script async src="/js/jquery.min.js"></script>
+        <script async src="/js/bootstrap.min.js"></script>
+        <script defer src="/js/codemirror.min.js"></script>
+        <script defer src="/js/clike.min.js"></script>
+        <script async src="/js/custom.js"></script>
     </th:block>
 </th:block>
