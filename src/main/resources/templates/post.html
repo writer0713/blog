@@ -3,7 +3,7 @@
 	<head th:replace="fragments/head :: head ( ${profile}, ${meta} )"></head>
 	<body>
 		<!-- Navigation -->
-		<nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/nav :: nav (${1})"></nav>
+		<nav class="navbar navbar-inverse navbar-fixed-top" th:replace="fragments/nav :: nav (${1}, ${'show'})"></nav>
 
 		<div class="container">
 			<header th:replace="fragments/logo :: logo"></header>

@@ -58,8 +58,13 @@ section {
 section:last-child {
 	padding-bottom: 0px;
 }
-@media screen and (max-width: 767px) {
 
+@media (min-width: 480px) {
+	.navbar-backbtn {
+		display: none;
+	}
+}
+@media screen and (max-width: 768px) {
 	.se-image-resource {
 		top: 0;
 		left: 0;
