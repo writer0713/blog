@@ -1,6 +1,6 @@
 {
-    "name": "",
-    "short_name": "",
+    "name": "KJH Dev Story",
+    "short_name": "KJH Blog",
     "icons": [
         {
             "src": "/images/favicon/android-chrome-192x192.png",
@@ -13,6 +13,7 @@
             "type": "image/png"
         }
     ],
+    "start_url": "/",
     "theme_color": "#ffffff",
     "background_color": "#ffffff",
     "display": "standalone"
