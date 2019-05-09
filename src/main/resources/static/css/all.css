@@ -4443,7 +4443,10 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
   position: relative;
   float: left;
   padding: 9px 10px;
-  margin: 5px 3px;
+  margin: 8px 3px;
+  background-color: transparent;
+  border: none;
+  outline: none;
 }
 .navbar-backbtn:active {
   background-color: #242628;
