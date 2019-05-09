@@ -1,5 +1,8 @@
-<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="nav (active)" xmlns:th="http://www.w3.org/1999/xhtml">
+<nav class="navbar navbar-inverse navbar-fixed-top" th:fragment="nav (active, display)" xmlns:th="http://www.w3.org/1999/xhtml">
     <div class="container">
+        <button th:if="${display == 'show'}" type="button" class="navbar-backbtn" onclick="window.history.back();">
+            <i class="fa fa-arrow-left fa-inverse" aria-hidden="true"></i>
+        </button>
         <div class="navbar-header">
             <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
                 <span class="sr-only">Toggle navigation</span>

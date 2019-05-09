@@ -4339,6 +4339,21 @@ select[multiple].input-group-sm > .input-group-btn > .btn {
     margin-left: -15px;
   }
 }
+.navbar-backbtn {
+  position: relative;
+  float: left;
+  padding: 9px 10px;
+  margin: 8px 3px;
+  background-color: transparent;
+  border: none;
+  outline: none;
+}
+.navbar-backbtn:active {
+  background-color: #242628;
+  border-radius: 5px;
+  border: none;
+  outline: none;
+}
 .navbar-toggle {
   position: relative;
   float: right;
