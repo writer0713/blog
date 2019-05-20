@@ -13,10 +13,8 @@
 
 ### 캡처 이미지 :
 
-![PC Main][./src/resources/static/images/screenshots/pc_main.jpg]
+![PC Main](src/main/resources/static/images/screenshots/pc_main.jpg)
 
-![PC Detail][./src/resources/static/images/screenshots/pc_detail.jpg]
+![PC Detail](src/main/resources/static/images/screenshots/pc_detail.jpg)
 
-![Mobile Main][./src/resources/static/images/screenshots/mobile_main.jpg]
-
-![Mobile Detail][./src/resources/static/images/screenshots/mobile_detail.jpg]
+![Mobile Detail](src/main/resources/static/images/screenshots/mobile_detail.jpg)
