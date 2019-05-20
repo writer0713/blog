@@ -12,3 +12,11 @@
 - 광고를 붙이는 등의 커스터마이징이 가능하다.
 
 ### 캡처 이미지 :
+
+![PC Main][./src/resources/static/images/screenshots/pc_main.jpg]
+
+![PC Detail][./src/resources/static/images/screenshots/pc_detail.jpg]
+
+![Mobile Main][./src/resources/static/images/screenshots/mobile_main.jpg]
+
+![Mobile Detail][./src/resources/static/images/screenshots/mobile_detail.jpg]
