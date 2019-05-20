@@ -104,6 +104,13 @@ public class MainController {
 
 		String params = getParams(categoryNo, null);
 
+		String title = "KJH Dev Story";
+		String desc = "프로그래밍을 사랑하는, 프로그래밍을 즐기는 사람입니다.";
+		String url = "https://writer0713.herokuapp.com/search?keyword=" + keyword;
+
+		Map<String, String> meta = makeMetaInfos(title, desc, url);
+
+		model.addAttribute("meta", meta);
 		model.addAttribute("posts", posts);
 		model.addAttribute("currentPageNo", page);
 		model.addAttribute("paging", paging);
